@@ -1,3 +1,12 @@
+#!/bin/bash
+kubectl create serviceaccount -n kube-system tiller
+kubectl create clusterrolebinding crb-tiller-cluster-admin --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
+
+# helm init --output yaml --service-account tiller > tiller.yaml
+# vi tiller.yaml
+#  - appVersion: apps/v1
+#  - spec.selector.matchLabels: {...}
+kubectl apply -f - <<EOF
 # apiVersion: extensions/v1beta1
 apiVersion: apps/v1
 kind: Deployment
@@ -49,4 +58,8 @@ spec:
           initialDelaySeconds: 1
           timeoutSeconds: 1
         resources: {}
+      serviceAccountName: tiller
 status: {}
+EOF
+
+# helm version
