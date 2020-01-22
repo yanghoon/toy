@@ -1,4 +1,5 @@
 plugins {
+	id 'com.google.cloud.tools.jib' version '1.8.0'
 	id 'org.springframework.boot' version '2.2.3.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.8.RELEASE'
 	id 'java'
@@ -7,6 +8,8 @@ plugins {
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
+
+// buildVersion = System.getenv("BUILD_VERSION") ?: "0"
 
 repositories {
 	mavenCentral()
@@ -36,4 +39,27 @@ dependencyManagement {
 
 test {
 	useJUnitPlatform()
+}
+
+jib {
+    from {
+        // image = "docker://openjdk:8-jre-alpine"
+        image = "openjdk:8-jre-alpine"
+    }
+    to {
+        image = "yoon5/cloud-stream-jib"
+        // tags = ["${project.version}".toString(), "${BUILD_VERSION}".toString()]
+        tags = ["${project.version}".toString()]
+        credHelper = "pass"
+    }
+    container {
+        mainClass = "com.example.demo.DemoApplication"
+        ports = ["8080"]
+        volumes = ["/tmp"]
+		environment = [
+            // "JAVA_TOOL_OPTIONS": "-Xmx2048m -XX:+UseG1GC",
+            // "SPRING_PROFILES_ACTIVE": "dev",
+            "TZ": "Asia/Seoul"
+        ]
+    }
 }
