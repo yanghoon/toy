@@ -1,0 +1,20 @@
+# ./gradlew jibDockerBuild
+# docker images | grep stream-jib
+# Error :: Cloud not connect to PLAINTEXT://kafka:9092 (advertisedListeners)
+version: "3.7"
+services:
+  stream:
+    image: yoon5/cloud-stream-jib:latest
+    ports:
+      - 8080
+    external_links:
+      - k3d-k3s-default-server:kafka
+    network_mode: host
+    environment:
+      TZ: Asia/Seoul
+      spring.kafka.bootstrap-servers: kafka:30092
+
+networks:
+  default:
+    external:
+      name: k3d-k3s-default

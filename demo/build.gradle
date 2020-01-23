@@ -41,6 +41,8 @@ test {
 	useJUnitPlatform()
 }
 
+bootRun { doFirst { jvmArgs = ['-Dspring.profiles.active=local'] } }
+
 jib {
     from {
         // image = "docker://openjdk:8-jre-alpine"

@@ -12,7 +12,7 @@ helm delete --purge kafka
 helm install bitnami/kafka -n kafka --namespace kafka \
   --set service.type=NodePort \
   --set service.nodePort=30092 \
-  --set advertisedListeners='PLAINTEXT://localhost:9092'
+  --set advertisedListeners='PLAINTEXT://kafka:9092'
 
 kubectl delete deploy kafka-manager -n kafka
 helm delete --purge kafka-manager
@@ -26,8 +26,16 @@ helm install stable/kafka-manager -n kafka-manager --namespace kafka \
 # helm ls
 # helm status kafka
 
+# $ vi /etc/hosts
+# 127.0.0.1	kafka
+# 127.0.0.1	kafka-manager.local
+# 
 # kafka-console-producer --broker-list      localhost:9092 --topic test
 # kafka-console-consumer --bootstrap-server localhost:9092 --topic test --from-beginning
+# 
+# kafka-console-producer --broker-list      localhost:9092 --topic uppercase-in-0
+# kafka-console-consumer --bootstrap-server localhost:9092 --topic uppercase-out-0
+# kafka-console-consumer --bootstrap-server localhost:9092 --topic uppercase-out-0 --from-beginning
 
 # Error-Producer:
 #   - [2020-01-20 17:03:55,816] ERROR Error when sending message to topic test with key: null, value: 1 bytes with error: (org.apache.kafka.clients.producer.internals.ErrorLoggingCallback)

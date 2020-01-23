@@ -1,0 +1,14 @@
+# ./gradlew jibDockerBuild
+# docker images | grep stream-jib
+version: "3.7"
+services:
+  stream:
+    image: yoon5/cloud-stream-jib:latest
+    # ports:
+    #   - 8090
+    network_mode: host
+    environment:
+      TZ: Asia/Seoul
+      spring.kafka.bootstrap-servers: kafka:9092
+      spring.profiles.active: local
+    #   JAVA_TOOL_OPTIONS: -Xmx2048m -XX:+UseG1GC
