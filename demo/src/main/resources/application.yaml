@@ -1,3 +1,32 @@
 spring:
   kafka:
     bootstrap-servers: kafka:9092
+
+---
+spring:
+  profiles: processor
+  cloud:
+    function:
+      # definition: uppercase  # Not work
+      # definition: uppercase_out
+      # definition: uppercase_in
+      # definition: uppercase_in|uppercase_out  # Not work
+      definition: uppercase_in;uppercase_out
+    stream:
+      bindings:
+        uppercase_in-in-0:
+          destination: uppercase-inp
+        uppercase_out-out-0:
+          destination: uppercase-outp
+---
+spring:
+  profiles: sink
+  cloud:
+    function:
+      definition: uppercase_in;uppercase_out
+    stream:
+      bindings:
+        uppercase_in-in-0:
+          destination: uppercase-ins
+        uppercase_out-out-0:
+          destination: uppercase-outs

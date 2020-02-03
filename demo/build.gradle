@@ -24,6 +24,7 @@ dependencies {
 	implementation 'org.springframework.cloud:spring-cloud-stream'
 	implementation 'org.springframework.cloud:spring-cloud-stream-binder-kafka'
 	implementation 'org.springframework.kafka:spring-kafka'
+	implementation 'io.projectreactor:reactor-core'
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
@@ -41,7 +42,7 @@ test {
 	useJUnitPlatform()
 }
 
-bootRun { doFirst { jvmArgs = ['-Dspring.profiles.active=local'] } }
+// bootRun { doFirst { jvmArgs = ['-Dspring.profiles.active=local'] } }
 
 jib {
     from {
