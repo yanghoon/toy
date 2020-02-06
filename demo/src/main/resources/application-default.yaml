@@ -1,6 +1,9 @@
 server:
   port: 8090
 
-spring:
-  profiles:
-    active: function
+# spring:
+#   profiles:
+#     active: function
+
+prometheus:
+  restful: true

@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.stream;
 
 import java.util.function.Consumer;
 import java.util.function.Supplier;

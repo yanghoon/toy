@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.stream;
 
 import java.util.function.Function;
 

@@ -2,6 +2,14 @@ spring:
   kafka:
     bootstrap-servers: kafka:9092
 
+prometheus:
+  servers:
+    default:
+      url: prometheus.local:8080
+      senstive: true
+      metrics:
+        node_memory: node_memory_Active_bytes
+
 ---
 spring:
   profiles: processor
