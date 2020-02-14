@@ -2,8 +2,13 @@
 ## Usage
 ```bash
 $ bash k3d.sh   # and tiller.sh
-$ bash kafka.sh
-$ bash prometheus.sh
+
+$ cd app && bash kafka.sh
+
+$ cd monitoring && bash prometheus.sh
+$ cd monitoring && bash grafana.sh
+
+$ cd auth && bash keycloak.sh
 ```
 
 ## Issues

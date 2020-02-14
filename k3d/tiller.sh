@@ -1,4 +1,6 @@
 #!/bin/bash
+export KUBECONFIG=$(k3d get-kubeconfig)
+
 kubectl create serviceaccount -n kube-system tiller
 kubectl create clusterrolebinding crb-tiller-cluster-admin --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
 

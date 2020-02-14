@@ -5,11 +5,12 @@
 # Ref:
 # - https://bitnami.com/stack/kafka/helm
 # - https://hub.kubeapps.com/charts/incubator/kafka
+export KUBECONFIG=$(k3d get-kubeconfig)
 
 kubectl create ns kafka
 
 helm delete --purge kafka
-helm install bitnami/kafka -n kafka --namespace kafka \
+helm install bitnami/kafka -n kafka --namespace kafka --version 7.1.2 \
   --set service.type=NodePort \
   --set service.nodePort=30092 \
   --set advertisedListeners='PLAINTEXT://kafka:9092'
@@ -18,7 +19,7 @@ kubectl delete deploy kafka-manager -n kafka
 helm delete --purge kafka-manager
 
 # --set zkHosts >> https://github.com/yahoo/kafka-manager/issues/430
-helm install stable/kafka-manager -n kafka-manager --namespace kafka \
+helm install stable/kafka-manager -n kafka-manager --namespace kafka --version 2.2.0 \
   --set zkHosts=kafka-zookeeper:2181 \
   --set service.type=NodePort \
   --set ingress.enabled=true 

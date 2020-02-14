@@ -1,10 +1,11 @@
 #!/bin/bash
+export KUBECONFIG=$(k3d get-kubeconfig)
 
-kubectl delete ns monitoring
-kubectl create ns monitoring
+kubectl delete ns prometheus
+kubectl create ns prometheus
 
 helm delete prometheus --purge
-helm install stable/prometheus -n prometheus --namespace monitoring -f - <<EOF
+helm install stable/prometheus -n prometheus --namespace prometheus --version 10.4.0 -f - <<EOF
 server:
   ingress:
     enabled: true
