@@ -1,7 +1,5 @@
 var app = new Vue({
     el: '#app',
-    data: {
-        message: 'Hello',
-        seen: true
-    }
+    vuetify: new Vuetify(),
+    data: {}
 })
