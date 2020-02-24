@@ -12,6 +12,7 @@
         /* https://github.com/vuetifyjs/vuetify/issues/9285 */
         .v-list-item-group > .theme--dark.v-list-item:not(.v-list-item--active):not(.v-list-item--disabled){ color: #78909C !important; }
         .v-list-item-group > .theme--dark.v-list-item:not(.v-list-item--active):not(.v-list-item--disabled) .theme--dark.v-icon { color: #78909C !important; }
+        .not-implemented * { text-decoration: line-through; color: #78909C !important; }
     </style>
 </head>
 
@@ -41,7 +42,9 @@
                                 {{ name }}
                             </v-subheader>
 
-                            <v-list-item v-for="item in val" :key="item.title" :to="item.link">
+                            <v-list-item v-for="item in val" :key="item.title" :to="item.link"
+                                    :disabled="!item.link"
+                                    :class="!item.link && 'not-implemented'">
                                 <v-list-item-icon>
                                     <v-icon>{{ item.icon }}</v-icon>
                                 </v-list-item-icon>

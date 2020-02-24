@@ -24,15 +24,15 @@ var app = new Vue({
         items: {
             // https://vuetifyjs.com/ko/components/lists
             'Applications': [
-                { title: 'Home', icon: 'mdi-help-box' },
-                { title: 'IAM', icon: 'mdi-help-box' },
-                { title: 'CI/CD', icon: 'mdi-image' },
-                { title: 'Settings', icon: 'mdi-image' },
+                { title: 'Home', icon: 'mdi-home' },
+                { title: 'IAM', icon: 'mdi-account-key' },
+                { title: 'CI/CD', icon: 'mdi-source-pull' },
+                { title: 'Settings', icon: 'mdi-book-variant' },
             ],
             'Administrator': [
-                { title: 'Realms', icon: 'mdi-image', link: '/realms' },
-                { title: 'Projects', icon: 'mdi-help-box', link: '/projects' },
-                { title: 'Config', icon: 'mdi-help-box', link: '/config' }
+                { title: 'Realms', icon: 'mdi-sitemap', link: '/realms' },
+                { title: 'Projects', icon: 'mdi-presentation', link: '/projects' },
+                { title: 'Config', icon: 'mdi-settings', link: '/config' }
             ]
         },
         selected: 'Realms',

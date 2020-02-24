@@ -39,7 +39,6 @@ public class KeycloakConfig {
 
         public void setConfig(Map<String, CompanyConfig> config) {
             this.config = config;
-            System.out.println(config);
         }
 
         public CompanyConfig getConfig(String name) {

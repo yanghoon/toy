@@ -6,8 +6,10 @@ import java.util.List;
 
 import com.example.rbac.console.CompanyService.Company;
 import com.example.rbac.console.CompanyService.CompanyConfig;
+import com.example.rbac.console.ProjectService.Project;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,12 +17,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.function.ServerResponse;
+// import org.springframework.web.servlet.function.ServerResponse;
 
 @RestController
 public class ConsoleController {
     @Autowired
     private CompanyService companies;
+
+    @Autowired
+    private ProjectService projects;
 
     @GetMapping("/companies")
     public List<Company> companies() {
@@ -34,26 +39,41 @@ public class ConsoleController {
      * @throws URISyntaxException
      */
     @PostMapping("/companies/new")
-    public ServerResponse createCompanies(@RequestParam("realm") String realm) throws URISyntaxException {
+    public ResponseEntity<?> createCompanies(@RequestParam("realm") String realm) throws URISyntaxException {
         companies.create(realm);
         URI uri = new URI("/companies");
-		return ServerResponse.created(uri).build();
+		return ResponseEntity.created(uri).build();
     }
 
     @PutMapping("/companies/{realm}")
-    public ServerResponse enabled(@PathVariable String realm, @RequestParam boolean enabled) {
+    public ResponseEntity<?> enabled(@PathVariable String realm, @RequestParam boolean enabled) {
         companies.enabled(realm, enabled);
-		return ServerResponse.ok().build();
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/companies/{realm}")
-    public ServerResponse remove(@PathVariable String realm) {
+    public ResponseEntity<?> remove(@PathVariable String realm) {
         companies.remove(realm);
-		return ServerResponse.ok().build();
+		return ResponseEntity.ok().build();
     }
 
     @GetMapping("/companies/{realm}/config")
     public CompanyConfig config(@PathVariable String realm) {
         return companies.config(realm);
+    }
+
+    /**
+     *  for Projects
+     */
+    @GetMapping("/companies/{realm}/projects")
+    public List<Project> projects(@PathVariable String realm) {
+        return projects.list(realm);
+    }
+
+    @PostMapping("/companies/{realm}/projects/new")
+    public ResponseEntity<?> create(@PathVariable String realm, @RequestParam String project) throws URISyntaxException {
+        projects.create(project, realm);
+        URI uri = new URI("/companies/" + realm + "/projects/" + project);
+        return ResponseEntity.created(uri).build();
     }
 }

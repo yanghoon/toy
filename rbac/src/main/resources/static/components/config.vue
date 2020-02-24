@@ -2,23 +2,28 @@
   <v-row justify="center">
     <v-col sm="10">
       <h2 class="py-3">Configuration</h2>
-      <div class="blue-grey--text pb-10 pt-0">for realm '{{ realm }}'</div>
+      <div class="blue-grey--text">for realm '{{ realm }}'</div>
 
-      <v-form v-if="config.links">
-        <h4>Links</h4>
+      <v-form v-if="config.links" class="pt-8">
+        <h3>Links</h3>
         <template v-for="(link, name) in config.links">
           <v-text-field :label="name" :key="name" :value="link" disabled></v-text-field>
         </template>
       </v-form>
 
-      <v-form v-if="config.authorization">
-        <h4>Authorization Server</h4>
+      <v-form v-if="config.authorization" class="pt-8">
+        <h3>Authorization Server</h3>
         <template v-for="(prop, name) in config.authorization">
+
+          <v-text-field :label="name" :key="name" :value="prop" disabled
+            v-if="typeof prop !== 'object'">
+          </v-text-field>
+
           <template v-if="typeof prop == 'object'">
-            <h5 :key="name">Attributes</h5>
-            <v-text-field v-for="(v, k) in prop" :label="k" :key="k" :value="v" disabled ></v-text-field>
+            <h4 :key="name" class="text-capitalize">{{ name }}</h4>
+            <v-text-field v-for="(v, k) in prop" :label="k" :key="k" :value="v" disabled></template>
           </template>
-          <v-text-field :label="name" :key="name" :value="prop" disabled v-else></v-text-field>
+
         </template>
       </v-form>
 

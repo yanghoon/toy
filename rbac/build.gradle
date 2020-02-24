@@ -21,6 +21,7 @@ dependencies {
 	}
 
 	implementation 'org.keycloak:keycloak-admin-client:8.0.0'
+	runtimeOnly 'org.springframework.boot:spring-boot-devtools'
 }
 
 test {
