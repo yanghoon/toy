@@ -25,5 +25,9 @@ var app = new Vue({
         },
         selected: 'Realms',
         miniVariant: false
+    },
+    components: {
+        'realms': httpVueLoader('components/realms.vue'),
+        'projects': httpVueLoader('components/projects.vue')
     }
 })
