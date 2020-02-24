@@ -5,6 +5,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 import com.example.rbac.console.CompanyService.Company;
+import com.example.rbac.console.CompanyService.CompanyConfig;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -49,5 +50,10 @@ public class ConsoleController {
     public ServerResponse remove(@PathVariable String realm) {
         companies.remove(realm);
 		return ServerResponse.ok().build();
+    }
+
+    @GetMapping("/companies/{realm}/config")
+    public CompanyConfig config(@PathVariable String realm) {
+        return companies.config(realm);
     }
 }

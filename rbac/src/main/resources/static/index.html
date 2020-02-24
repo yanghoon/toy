@@ -34,7 +34,6 @@
                     </v-list-item>
 
                     <v-divider></v-divider>
-
                     
                     <v-list-item-group mandatory v-model="selected">
                         <template v-for="(val, name) in items">
@@ -42,7 +41,7 @@
                                 {{ name }}
                             </v-subheader>
 
-                            <v-list-item v-for="item in val" :key="item.title" link>
+                            <v-list-item v-for="item in val" :key="item.title" :to="item.link">
                                 <v-list-item-icon>
                                     <v-icon>{{ item.icon }}</v-icon>
                                 </v-list-item-icon>
@@ -57,15 +56,17 @@
 
             <v-content class="blue-grey darken-4">
                 <v-container fluid>
-                    <realms></realms>
+                    <router-view></router-view>
                 </v-container>
             </v-content>
         </v-app>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
-    <script src="https://unpkg.com/http-vue-loader"></script>
     <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+    <script src="https://unpkg.com/http-vue-loader"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script> <!-- https://router.vuejs.org/kr/guide/ -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="index.js"></script>
 </body>
 

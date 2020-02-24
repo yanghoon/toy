@@ -11,3 +11,15 @@ management:
     web:
       exposure:
         include: '*'
+
+# http://blog.egstep.com/spring-boot/2017/12/10/springboot-reload/
+# https://stackoverflow.com/a/56005532
+# https://dzone.com/articles/continuous-auto-restart-with-spring-boot-devtools
+spring:
+  devtools:
+    restart:
+      enabled: true
+      exclude: ""
+      # pollInterval: 3s
+    livereload:
+      enabled: true

@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import com.example.rbac.console.CompanyService;
 import com.example.rbac.console.ProjectService;
+import com.example.rbac.impl.keycloak.KeycloakConfig.CompanyProperties;
 
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.resource.RealmResource;
@@ -17,7 +18,10 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class KeycloakService implements CompanyService, ProjectService {
     @Autowired
-    Keycloak keycloak;
+    private Keycloak keycloak;
+
+    @Autowired
+    private CompanyProperties config;
     
     private Company toCompany(RealmRepresentation r) {
         String name = r.getRealm();
@@ -63,11 +67,14 @@ public class KeycloakService implements CompanyService, ProjectService {
         res.update(rep);
     }
 
-    @Override
     public void remove(String name) {
         // TEST:
         // curl -X DELETE http://localhost:8090/companies/_test
         RealmResource res = keycloak.realm(name);
         res.remove();
+    }
+
+    public CompanyConfig config(String name) {
+        return config.getConfig(name);
     }
 }

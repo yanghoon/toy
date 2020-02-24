@@ -1,25 +1,44 @@
 <template>
   <v-row justify="center">
     <v-col sm="10">
-      <div>
-        {{ selected }}
-      </div>
-      <v-simple-table>
+      <h2>Realms</h2>
+
+      <v-row>
+        <v-col sm="3" class="blue-grey--text text--darken-3">
+          <v-text-field dense label="New Realm" v-model="form.newRealmName">
+            <template v-slot:append-outer>
+              <v-btn small icon outlined class="blue-grey--text text--darken-2"
+                  :color="form.newRealmName ? 'primary' : ''"
+                  :disabled="!form.newRealmName"
+                  @click="addRealm">
+                <v-icon>mdi-plus</v-icon>
+              </v-btn>
+            </template>
+          </v-text-field>
+        </v-col>
+      </v-row>
+
+      <v-simple-table class="blue-grey darken-3">
         <template v-slot:default>
-          <thead>
+          <thead class="blue-grey darken-4">
             <tr>
               <th class="text-left">Name</th>
-              <th class="text-left">Calories</th>
+              <th class="text-left">Enabled</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="item in desserts" :key="item.name">
+            <tr v-for="item in items" :key="item.name">
               <td>{{ item.name }}</td>
-              <td>{{ item.calories }}</td>
+              <td>
+                <v-switch dense v-model="item.enabled" @change="changeRealm(item)"></v-switch>
+                <!-- {{ item.enabled }} -->
+              </td>
             </tr>
           </tbody>
         </template>
       </v-simple-table>
+
+      <v-progress-linear indeterminate v-if="loading"></v-progress-linear>
     </v-col>
   </v-row>
 </template>
@@ -29,19 +48,34 @@
 module.exports = {
     data: function() {
       return {
-        desserts: [
-          { name: 'Frozen Yogurt', calories: 159 },
-          { name: 'Ice cream sandwich', calories: 237 },
-          { name: 'Eclair', calories: 262 },
-          { name: 'Cupcake', calories: 305 },
-          { name: 'Gingerbread', calories: 356 },
-          { name: 'Jelly bean', calories: 375 },
-          { name: 'Lollipop', calories: 392 },
-          { name: 'Honeycomb', calories: 408 },
-          { name: 'Donut', calories: 452 },
-          { name: 'KitKat', calories: 518 },
-        ]
+        items: [],
+        loading: true,
+        form: {
+          newRealmName: ''
+        }
       }
     },
+    beforeMount: function() {
+      this.getRealmList();
+    },
+    methods: {
+      'getRealmList': function(){
+        var vm = this
+        var success = function(res){ vm.items = res.data; vm.loading = false; }
+
+        this.loading = true
+        axios.get('/companies').then(success)
+      },
+      'addRealm': function(){
+        var url = '/companies/new?realm=' + this.form.newRealmName;
+
+        this.form.newRealmName = ''
+        axios.post(url).then(this.getRealmList)
+      },
+      'changeRealm': function(item){
+        var url = '/companies/' + item.name + '?enabled=' + item.enabled;
+        axios.put(url).then(this.getRealmList)
+      }
+    }
   }
 </script>

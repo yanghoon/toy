@@ -1,9 +1,8 @@
 <template>
   <v-row justify="center">
-    <v-col sm="11">
-      <div>
-        {{ selected }}
-      </div>
+    <v-col sm="10">
+      <h2 class="py-3">Projects</h2>
+
       <v-simple-table>
         <template v-slot:default>
           <thead>

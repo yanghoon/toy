@@ -1,9 +1,15 @@
 package com.example.rbac.impl.keycloak;
 
+import java.util.Map;
+
+import com.example.rbac.console.CompanyService.CompanyConfig;
+
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.KeycloakBuilder;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
 @Configuration
 public class KeycloakConfig {
@@ -15,7 +21,8 @@ public class KeycloakConfig {
             .username("keycloak")
             .password("keycloak")
             .clientId("master-realm")
-            .clientSecret("141bfaa0-314d-4862-b466-cf4845fabb37");
+            // .clientSecret("141bfaa0-314d-4862-b466-cf4845fabb37");
+            .clientSecret("49e1022f-5899-4836-bde4-3734776d69e1");
         Keycloak keycloak = builder.build();
         return keycloak;
     }
@@ -23,5 +30,20 @@ public class KeycloakConfig {
     @Bean
     public KeycloakService keycloakService(){
         return new KeycloakService();
+    }
+
+    @Component
+    @ConfigurationProperties(prefix = "companies")
+    public static class CompanyProperties {
+        private Map<String, CompanyConfig> config;
+
+        public void setConfig(Map<String, CompanyConfig> config) {
+            this.config = config;
+            System.out.println(config);
+        }
+
+        public CompanyConfig getConfig(String name) {
+            return config.get(name);
+        }
     }
 }

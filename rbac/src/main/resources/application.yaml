@@ -1,0 +1,13 @@
+companies:
+  config:
+    dummy:
+      links:
+        grafana: http://grafana.local:8080/login/generic_oauth#hash
+        jenkins: http://jenkins.local:8080
+      authorization:
+        kind: keycloak
+        url: http://keycloak.local:8080/auth
+        attributes:
+          realm: master
+          user: keycloak
+          client-id: master-realm
