@@ -7,13 +7,55 @@
     <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+
+    <style>
+        /* https://github.com/vuetifyjs/vuetify/issues/9285 */
+        .v-list-item-group > .theme--dark.v-list-item:not(.v-list-item--active):not(.v-list-item--disabled){ color: #78909C !important; }
+        .v-list-item-group > .theme--dark.v-list-item:not(.v-list-item--active):not(.v-list-item--disabled) .theme--dark.v-icon { color: #78909C !important; }
+    </style>
 </head>
 
 <body>
     <div id="app">
         <v-app>
-            <v-content>
-                <v-container>Hello world!</v-container>
+            <v-navigation-drawer absolute v-model="drawer"
+                class="blue-grey darken-3"
+                :mini-variant="miniVariant">
+                <v-list dense nav flat expand class="py-0">
+                    <v-list-item two-line :class="miniVariant && 'px-0'">
+                        <v-list-item-avatar>
+                            <img src="https://randomuser.me/api/portraits/men/81.jpg">
+                        </v-list-item-avatar>
+                        <v-list-item-content>
+                            <v-list-item-title>Projec #1</v-list-item-title>
+                            <v-list-item-subtitle>Realm - A</v-list-item-subtitle>
+                        </v-list-item-content>
+                    </v-list-item>
+
+                    <v-divider></v-divider>
+
+                    
+                    <v-list-item-group mandatory v-model="selected">
+                        <template v-for="(val, name) in items" :key="name">
+                            <v-subheader class="text-uppercase blue-grey--text text--darken-1">
+                                {{ name }}
+                            </v-subheader>
+
+                            <v-list-item v-for="item in val" :key="item.title" link>
+                                <v-list-item-icon>
+                                    <v-icon>{{ item.icon }}</v-icon>
+                                </v-list-item-icon>
+                                <v-list-item-content>
+                                    <v-list-item-title>{{ item.title }}</v-list-item-title>
+                                </v-list-item-content>
+                            </v-list-item>
+                        </template>
+                    </v-list-item-group>
+                </v-list>
+            </v-navigation-drawer>
+
+            <v-content class="blue-grey darken-4">
+                <v-container></v-container>
             </v-content>
         </v-app>
     </div>
