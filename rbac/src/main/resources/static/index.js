@@ -23,6 +23,7 @@ var app = new Vue({
         drawer: true,
         items: {
             // https://vuetifyjs.com/ko/components/lists
+            // http://code.meta-platform.com/assets/mdi/preview.html
             'Applications': [
                 { title: 'Home', icon: 'mdi-home' },
                 { title: 'IAM', icon: 'mdi-account-key' },

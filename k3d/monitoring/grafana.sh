@@ -43,9 +43,9 @@ grafana.ini:
     enabled: true
     client_id: grafana
     scopes: openid email name groups
-    auth_url: http://keycloak.local:8080/auth/realms/master/protocol/openid-connect/auth
-    token_url: http://keycloak-http.keycloak/auth/realms/master/protocol/openid-connect/token
-    api_url: http://keycloak-http.keycloak/auth/realms/master/protocol/openid-connect/userinfo
+    auth_url: http://keycloak.local:8080/auth/realms/dummy/protocol/openid-connect/auth
+    token_url: http://keycloak-http.keycloak/auth/realms/dummy/protocol/openid-connect/token
+    api_url: http://keycloak-http.keycloak/auth/realms/dummy/protocol/openid-connect/userinfo
     allow_sign_up: true
     # team_ids:
     # allowed_organizations:

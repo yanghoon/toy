@@ -23,16 +23,13 @@
           <thead class="blue-grey darken-4">
             <tr>
               <th class="text-left">Name</th>
-              <th class="text-left">Enabled</th>
+              <th class="text-left">Groups</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="item in items" :key="item.name">
               <td>{{ item.name }}</td>
-              <td>
-                <!-- <v-switch dense v-model="item.enabled" @change="changeRealm(item)"></v-switch> -->
-                {{ item.enabled }}
-              </td>
+              <td>{{ item.subgroups.length }}</td>
             </tr>
           </tbody>
         </template>

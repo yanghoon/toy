@@ -104,6 +104,6 @@ public class KeycloakService implements CompanyService, ProjectService {
         // http://localhost:8090/companies/dummy/projects/new
         GroupRepresentation group = new GroupRepresentation();
         group.setName(project);
-        Response res = keycloak.realm(company).groups().add(group);
+        keycloak.realm(company).groups().add(group);
     }
 }
