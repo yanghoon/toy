@@ -1,7 +1,7 @@
 // https://www.npmjs.com/package/http-vue-loader
 // https://medium.com/@jamesweee/using-vue-js-single-file-component-without-module-bundlers-aea58d892ad9
 // - Custom Component
-var names = ['realms', 'projects', 'config']
+var names = ['realms', 'projects', 'config', 'iam']
 var comps = names.reduce(function(a, v){ a[v] = httpVueLoader('components/' + v + '.vue'); return a; }, {})
 var routes = Object.keys(comps).reduce(function(a, v) { a.push( {path: '/' + v, component: comps[v]} ); return a; }, [])
 var router = new VueRouter({ routes: routes })
@@ -26,7 +26,7 @@ var app = new Vue({
             // http://code.meta-platform.com/assets/mdi/preview.html
             'Applications': [
                 { title: 'Home', icon: 'mdi-home' },
-                { title: 'IAM', icon: 'mdi-account-key' },
+                { title: 'IAM', icon: 'mdi-account-key', link: '/iam' },
                 { title: 'CI/CD', icon: 'mdi-source-pull' },
                 { title: 'Settings', icon: 'mdi-book-variant' },
             ],

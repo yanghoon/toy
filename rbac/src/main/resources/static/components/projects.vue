@@ -5,15 +5,11 @@
 
       <v-row>
         <v-col sm="3" class="blue-grey--text text--darken-3">
-          <v-text-field dense label="New Project" v-model="form.newProjName">
-            <template v-slot:append-outer>
-              <v-btn small icon outlined class="blue-grey--text text--darken-2"
-                  :color="form.newProjName ? 'primary' : ''"
-                  :disabled="!form.newProjName"
-                  @click="addProj">
-                <v-icon>mdi-plus</v-icon>
-              </v-btn>
-            </template>
+          <v-text-field dense
+              label="+ Add Project"
+              hint="Press enter to create"
+              v-model="form.newProjName"
+              @keyup.enter="addProj">
           </v-text-field>
         </v-col>
       </v-row>
@@ -24,12 +20,18 @@
             <tr>
               <th class="text-left">Name</th>
               <th class="text-left">Groups</th>
+              <th class="text-left">Actions</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="item in items" :key="item.name">
               <td>{{ item.name }}</td>
               <td>{{ item.subgroups.length }}</td>
+              <td>
+                <v-btn small icon class="blue-grey--text" @click="removeProj(item)">
+                  <v-icon>mdi-delete</v-icon>
+                </v-btn>
+              </td>
             </tr>
           </tbody>
         </template>
@@ -70,6 +72,11 @@ module.exports = {
 
         this.form.newProjName = ''
         axios.post(url).then(this.getProjList)
+      },
+      'removeProj': function(item){
+        var url = '/companies/' + this.realm + '/projects/' + item.name;
+
+        axios.delete(url).then(this.getProjList)
       },
       // 'changeProj': function(item){
       //   var url = '/companies/' + item.name + '?enabled=' + item.enabled;

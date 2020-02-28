@@ -1,5 +1,6 @@
 package com.example.rbac.console;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface ProjectService {
@@ -21,5 +22,6 @@ public interface ProjectService {
     }
 
 	public List<Project> list(String company);
-	public void create(String project, String company);
+	public void create(String company, String project) throws IOException;
+	public void remove(String company, String project) throws IOException;
 }

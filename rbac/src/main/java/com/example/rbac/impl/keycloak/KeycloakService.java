@@ -1,25 +1,39 @@
 package com.example.rbac.impl.keycloak;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.ws.rs.core.Response;
+import javax.ws.rs.NotFoundException;
 
 import com.example.rbac.console.CompanyService;
 import com.example.rbac.console.ProjectService;
+import com.example.rbac.console.UserService;
+import com.example.rbac.grafana.GrafanaService;
+import com.example.rbac.grafana.Org;
 import com.example.rbac.impl.keycloak.KeycloakConfig.CompanyProperties;
 
 import org.keycloak.admin.client.Keycloak;
+import org.keycloak.admin.client.resource.GroupResource;
+import org.keycloak.admin.client.resource.GroupsResource;
 import org.keycloak.admin.client.resource.RealmResource;
+import org.keycloak.admin.client.resource.UserResource;
 import org.keycloak.representations.idm.GroupRepresentation;
 import org.keycloak.representations.idm.RealmRepresentation;
+import org.keycloak.representations.idm.UserRepresentation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import retrofit2.Response;
 
 /**
  * @see https://www.keycloak.org/docs-api/9.0/rest-api/
  * @see https://github.com/keycloak/keycloak/releases
  */
-public class KeycloakService implements CompanyService, ProjectService {
+public class KeycloakService implements CompanyService, ProjectService, UserService {
+    private Logger log = LoggerFactory.getLogger(this.getClass());
+
     @Autowired
     private Keycloak keycloak;
 
@@ -78,8 +92,10 @@ public class KeycloakService implements CompanyService, ProjectService {
         return config.getConfig(name);
     }
 
+    /**
+     * for Project
+     */
     private Project toProject(GroupRepresentation g) {
-        System.out.println(g);
         String name = g.getName();
         String path = g.getPath();
         List<Project> subgroups = g.getSubGroups().stream().map(sg -> toProject(sg)).collect(Collectors.toList());
@@ -90,20 +106,72 @@ public class KeycloakService implements CompanyService, ProjectService {
     public List<Project> list(String company) {
         // TEST:
         // curl -X GET http://localhost:8090/companies/dummy/projects
-        return keycloak.realm(company)
-                    .groups()
-                    .groups()
-                    .stream()
-                    .map(r -> toProject(r))
-                    .collect(Collectors.toList());
+        return keycloak.realm(company).groups().groups().stream().map(r -> toProject(r)).collect(Collectors.toList());
     }
 
-    public void create(String project, String company) {
+    public void create(String company, String project) throws IOException {
         // TEST:
         // curl -X POST -d project=proj-a
         // http://localhost:8090/companies/dummy/projects/new
         GroupRepresentation group = new GroupRepresentation();
         group.setName(project);
         keycloak.realm(company).groups().add(group);
+
+        // Org org = Org.builder().name(project).build();
+        Org org = Org.builder().name(project).build();
+        Response<Org> res = grafana.create(org).execute();
+        log.info("{}", res.toString());
+        log.debug("Response.body - {}", res.body());
+        log.debug("Response.errorBody - {}", res.errorBody());
+    }
+
+    public void remove(String company, String project) throws IOException {
+        // TEST:
+        // curl -X DELETE http://localhost:8090/companies/dummy/projects/proj-a
+        try {
+            GroupsResource groups = keycloak.realm(company).groups();
+            List<GroupRepresentation> group = groups.groups(project, 0, 1);
+            if (group.isEmpty()) {
+                // TODO
+            }
+
+            groups.group(group.get(0).getId()).remove();
+        } catch (NotFoundException e) {
+        }
+    }
+
+    @Autowired
+    private GrafanaService grafana;
+
+    /**
+     * for User & RBAC
+     */
+
+    private User toUser(UserRepresentation u) {
+        String id = u.getId();
+        String name = u.getUsername();
+        String email = u.getEmail();
+        return User.builder().id(id).name(name).email(email).build();
+    }
+
+    public List<User> list(String company, String project) {
+        GroupResource group = keycloak.realm(company).groups().group(project);
+        List<UserRepresentation> members = group.members();
+        return members.stream().map(u -> toUser(u)).collect(Collectors.toList());
+    }
+
+    public List<User> search(String company, String keyword) {
+        List<UserRepresentation> users = keycloak.realm(company).users().search(keyword, 0, 10);
+        return users.stream().map(u -> toUser(u)).collect(Collectors.toList());
+    }
+
+    public void invite(String company, String groupId, String userId) {
+        UserResource user = keycloak.realm(company).users().get(userId);
+        user.joinGroup(groupId);
+    }
+
+    public void leave(String company, String groupId, String userId) {
+        UserResource user = keycloak.realm(company).users().get(userId);
+        user.leaveGroup(groupId);
     }
 }

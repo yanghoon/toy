@@ -7,6 +7,7 @@ import java.util.List;
 import com.example.rbac.console.CompanyService.Company;
 import com.example.rbac.console.CompanyService.CompanyConfig;
 import com.example.rbac.console.ProjectService.Project;
+import com.example.rbac.console.UserService.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +27,9 @@ public class ConsoleController {
 
     @Autowired
     private ProjectService projects;
+
+    @Autowired
+    private UserService users;
 
     @GetMapping("/companies")
     public List<Company> companies() {
@@ -71,9 +75,53 @@ public class ConsoleController {
     }
 
     @PostMapping("/companies/{realm}/projects/new")
-    public ResponseEntity<?> create(@PathVariable String realm, @RequestParam String project) throws URISyntaxException {
-        projects.create(project, realm);
+    public ResponseEntity<?> create(@PathVariable String realm, @RequestParam String project) throws Exception {
+        projects.create(realm, project);
         URI uri = new URI("/companies/" + realm + "/projects/" + project);
         return ResponseEntity.created(uri).build();
     }
+
+    @DeleteMapping("/companies/{realm}/projects/{project}")
+    public ResponseEntity<?> remove(@PathVariable String realm, @PathVariable String project) throws Exception {
+        projects.remove(realm, project);
+        return ResponseEntity.ok().build();
+    }
+
+    /**
+     *  for User
+     */
+    @GetMapping("/companies/{realm}/projects/{project}/members")
+    public List<User> members(@PathVariable String realm, @PathVariable String project) {
+        return users.list(realm, project);
+    }
+
+    @GetMapping("/companies/{realm}/users")
+    public List<User> searchUser(@PathVariable String realm, @RequestParam String keyword) {
+        return users.search(realm, keyword);
+    }
+
+    @PutMapping("/companies/{realm}/projects/{project}/members/{username}")
+    public ResponseEntity<?> invite(@PathVariable String realm, @PathVariable String project, @PathVariable String username) {
+        users.invite(realm, project, username);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/companies/{realm}/projects/{project}/members/{username}")
+    public ResponseEntity<?> leave(@PathVariable String realm, @PathVariable String project, @PathVariable String username) {
+        users.leave(realm, project, username);
+        return ResponseEntity.ok().build();
+    }
+
+    // @PostMapping("/companies/{realm}/projects/new")
+    // public ResponseEntity<?> create(@PathVariable String realm, @RequestParam String project) throws Exception {
+    //     projects.create(realm, project);
+    //     URI uri = new URI("/companies/" + realm + "/projects/" + project);
+    //     return ResponseEntity.created(uri).build();
+    // }
+
+    // @DeleteMapping("/companies/{realm}/projects/{project}")
+    // public ResponseEntity<?> remove(@PathVariable String realm, @PathVariable String project) throws Exception {
+    //     projects.remove(realm, project);
+    //     return ResponseEntity.ok().build();
+    // }
 }

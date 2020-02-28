@@ -4,6 +4,7 @@ server:
 logging:
   level:
     org.apache.http: INFO
+    com.example.rbac: DEBUG
 
 # https://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-features.html
 management:
@@ -23,3 +24,13 @@ spring:
       # pollInterval: 3s
     livereload:
       enabled: true
+
+# NOT WORKING
+# https://github.com/syhily/spring-boot-retrofit-support
+retrofit:
+  connection:
+  endpoints:
+    grafana:
+      baseUrl: http://grafana.local:8080/
+      accessToken: xxxx
+      logingLevel: DEBUG

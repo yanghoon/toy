@@ -5,15 +5,11 @@
 
       <v-row>
         <v-col sm="3" class="blue-grey--text text--darken-3">
-          <v-text-field dense label="New Realm" v-model="form.newRealmName">
-            <template v-slot:append-outer>
-              <v-btn small icon outlined class="blue-grey--text text--darken-2"
-                  :color="form.newRealmName ? 'primary' : ''"
-                  :disabled="!form.newRealmName"
-                  @click="addRealm">
-                <v-icon>mdi-plus</v-icon>
-              </v-btn>
-            </template>
+          <v-text-field dense
+            label="+ Add Realm"
+            hint="Press enter to create"
+            v-model="form.newRealmName"
+            @keyup.enter="addRealm">
           </v-text-field>
         </v-col>
       </v-row>

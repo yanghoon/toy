@@ -14,13 +14,24 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
-	// implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	// implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+
+	// Retorfit 2
+	implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+	implementation 'com.squareup.retrofit2:converter-jackson:2.3.0'
+	implementation 'com.squareup.okhttp3:logging-interceptor:3.8.0'
+	// Lombok - https://projectlombok.org/setup/gradle
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+
+	// Keycloak
+	implementation 'org.keycloak:keycloak-admin-client:8.0.0'
+
+	// Testing
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
-
-	implementation 'org.keycloak:keycloak-admin-client:8.0.0'
 	runtimeOnly 'org.springframework.boot:spring-boot-devtools'
 }
 
