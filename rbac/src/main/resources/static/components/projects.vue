@@ -9,6 +9,7 @@
               label="+ Add Project"
               hint="Press enter to create"
               v-model="form.newProjName"
+              :disabled="endpoints.invalid"
               @keyup.enter="addProj">
           </v-text-field>
         </v-col>
@@ -48,40 +49,52 @@ module.exports = {
     data: function() {
       return {
         items: [],
-        loading: true,
-        realm: 'dummy',
+        loading: false,
         form: {
           newProjName: ''
         }
       }
     },
-    beforeMount: function() {
-      this.getProjList();
+    computed: {
+      'endpoints': function(){
+        // https://github.com/vuejs/vue/issues/1964#issuecomment-162210972
+        var r = global.realm || {}
+        return {
+          projects: '/companies/' + r.name + '/projects',
+          projects_new: '/companies/' + r.name + '/projects/new',
+          invalid: !r.name
+        }
+      }
     },
+    watch: {
+      'endpoints.projects': function(url){
+        if(!this.endpoints.invalid)
+          this.getProjList()
+      }
+    },
+    // beforeMount: function() {
+    //   this.getProjList();
+    // },
     methods: {
       'getProjList': function(){
         var vm = this
         var success = function(res){ vm.items = res.data; vm.loading = false; }
-        var url = '/companies/' + this.realm + '/projects'
+        var url = this.endpoints.projects
 
         this.loading = true
         axios.get(url).then(success)
       },
       'addProj': function(){
-        var url = '/companies/' + this.realm + '/projects/new?project=' + this.form.newProjName;
+        var url = this.endpoints.projects_new + '?project=' + this.form.newProjName
 
         this.form.newProjName = ''
         axios.post(url).then(this.getProjList)
       },
       'removeProj': function(item){
-        var url = '/companies/' + this.realm + '/projects/' + item.name;
+        var url = this.endpoints.projects + '/' + item.name
 
         axios.delete(url).then(this.getProjList)
-      },
-      // 'changeProj': function(item){
-      //   var url = '/companies/' + item.name + '?enabled=' + item.enabled;
-      //   axios.put(url).then(this.getRealmList)
-      // }
+      }
     }
   }
 </script>

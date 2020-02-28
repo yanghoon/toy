@@ -5,14 +5,6 @@
 
       <v-row>
         <v-col sm="3" class="blue-grey--text text--darken-3">
-          <!--
-          <v-text-field dense
-              label="+ Add User"
-              hint="Press enter to create"
-              v-model="form.newProjName"
-              @keyup.enter="addProj">
-          </v-text-field>
-          -->
           <v-autocomplete
             label="+ Invite User"
             hint="Press 'ctrl + enter' to invite user"
@@ -20,13 +12,13 @@
             clearable
             hide-no-data
             return-object
+            :disabled="endpoints.invalid"
             :item-text="form.itemKey"
             :items="form.items"
             :loading="form.loading"
             :search-input.sync="form.search"
             @change="form.selectd = ''"
-            @keyup.ctrl.enter="inviteUser"
-            >
+            @keyup.ctrl.enter="inviteUser">
             <!-- @keydown.esc="resetForm" -->
           </v-autocomplete>
         </v-col>
@@ -66,9 +58,7 @@ module.exports = {
     data: function() {
       return {
         items: [],
-        loading: true,
-        realm: 'dummy', // 'bcda6199-1e96-4a34-9b0e-428a97f71e58',
-        project: '4831f6d6-817a-4846-be47-daa45945842b', // 'proj-a'
+        loading: false,
         form: {
           newProjName: '',
           selected: '',
@@ -79,22 +69,43 @@ module.exports = {
         }
       }
     },
-    beforeMount: function() {
-      this.getUserList();
+    computed: {
+      'endpoints': function(){
+        // https://github.com/vuejs/vue/issues/1964#issuecomment-162210972
+        // console.log('endpoint_members.computed', global.realm, global.project) 
+        var r = global.realm || {}, p = global.project || {}
+        return {
+          users: '/companies/' + r.name + '/users',
+          members: '/companies/' + r.name + '/projects/' + p.id + '/members',
+          invalid: !p.id
+        }
+      }
     },
     watch: {
       'form.search': function(val) {
-        console.log('keyword is changed : ', val)
+        // console.log('keyword is changed : ', val)
         var selected = this.form.selected
         if(!val || val && val !== (selected && selected.name))
           this.searchUser(val)
       },
+      'endpoints.members': function(nval, oval){
+        // console.log('endpoint_members.watch', oval, nval)
+        nval && this.getUserList()
+      },
+      'endpoints.invalid': function(nval, oval){
+        if(nval == true){
+          this.items = []
+          this.form.search = ''
+        }
+      }
     },
     methods: {
       'getUserList': function(){
+        if(this.endpoints.invalid) return;
+
         var vm = this
         var success = function(res){ vm.items = res.data; vm.loading = false; }
-        var url = '/companies/' + this.realm + '/projects/' + this.project + '/members'
+        var url = this.endpoints.members
 
         this.loading = true
         axios.get(url).then(success)
@@ -104,37 +115,23 @@ module.exports = {
 
         var vm = this
         var success = function(res){ vm.form.items = res.data; vm.form.loading = false; }
-        var url = '/companies/' + this.realm + '/users?keyword=' + keyword
+        var url = this.endpoints.users + '?keyword=' + keyword
 
         this.form.loading = true
         axios.get(url).then(success)
       },
       'inviteUser': function(user){
         var user = this.form.selected
-        var url = '/companies/' + this.realm + '/projects/' + this.project + '/members/' + user.id
+        var url = this.endpoints.members + '/' + user.id
 
         // this.form.selected = {}
         // this.$nextTick(() => { this.form.selected = {} })
         axios.put(url).then(this.getUserList)
       },
       'leaveUser': function(user){
-        var url = '/companies/' + this.realm + '/projects/' + this.project + '/members/' + user.id
+        var url = this.endpoints.members + '/' + user.id
         axios.delete(url).then(this.getUserList)
-      },
-      // 'resetForm': function() {
-      //   console.log('reset!!')
-      // }
-      // 'addUser': function(){
-      //   var url = '/companies/' + this.realm + '/projects/new?project=' + this.form.newProjName;
-
-      //   this.form.newProjName = ''
-      //   axios.post(url).then(this.getUserList)
-      // },
-      // 'removeUser': function(item){
-      //   var url = '/companies/' + this.realm + '/projects/' + item.name;
-
-      //   axios.delete(url).then(this.getUserList)
-      // },
+      }
     }
   }
 </script>

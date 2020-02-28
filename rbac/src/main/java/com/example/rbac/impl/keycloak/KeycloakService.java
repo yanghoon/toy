@@ -96,10 +96,11 @@ public class KeycloakService implements CompanyService, ProjectService, UserServ
      * for Project
      */
     private Project toProject(GroupRepresentation g) {
+        String id = g.getId();
         String name = g.getName();
         String path = g.getPath();
         List<Project> subgroups = g.getSubGroups().stream().map(sg -> toProject(sg)).collect(Collectors.toList());
-        Project p = new Project(name, path, subgroups);
+        Project p = new Project(id, name, path, subgroups);
         return p;
     }
 

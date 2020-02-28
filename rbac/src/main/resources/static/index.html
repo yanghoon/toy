@@ -13,6 +13,8 @@
         .v-list-item-group > .theme--dark.v-list-item:not(.v-list-item--active):not(.v-list-item--disabled){ color: #78909C !important; }
         .v-list-item-group > .theme--dark.v-list-item:not(.v-list-item--active):not(.v-list-item--disabled) .theme--dark.v-icon { color: #78909C !important; }
         .not-implemented * { text-decoration: line-through; color: #78909C !important; }
+
+        /* .v-list--nav .v-select { background: red;} */
     </style>
 </head>
 
@@ -29,8 +31,23 @@
                             <img src="https://randomuser.me/api/portraits/men/81.jpg">
                         </v-list-item-avatar>
                         <v-list-item-content>
-                            <v-list-item-title>Project #1</v-list-item-title>
-                            <v-list-item-subtitle>Realm - A</v-list-item-subtitle>
+                            <v-list-item-title>
+                                <v-select dense falt hide-details
+                                  class="caption" placeholder="Realm"
+                                  :items="realms" item-text="name"
+                                  v-model="global.realm"
+                                  return-object
+                                  @change="getProjects">
+                                </v-select>
+                            </v-list-item-title>
+                            <v-list-item-subtitle>
+                                <v-select dense falt hide-details
+                                  class="caption" placeholder="Project"
+                                  :items="projects" item-text="name"
+                                  v-model="global.project"
+                                  return-object>
+                                </v-select>
+                            </v-list-item-subtitle>
                         </v-list-item-content>
                     </v-list-item>
 
