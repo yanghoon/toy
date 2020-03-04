@@ -72,9 +72,6 @@ module.exports = {
           this.getProjList()
       }
     },
-    // beforeMount: function() {
-    //   this.getProjList();
-    // },
     methods: {
       'getProjList': function(){
         var vm = this
@@ -91,7 +88,7 @@ module.exports = {
         axios.post(url).then(this.getProjList)
       },
       'removeProj': function(item){
-        var url = this.endpoints.projects + '/' + item.name
+        var url = this.endpoints.projects + '/' + item.id
 
         axios.delete(url).then(this.getProjList)
       }

@@ -4,18 +4,19 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.ws.rs.NotFoundException;
-
 import com.example.rbac.console.CompanyService;
 import com.example.rbac.console.ProjectService;
 import com.example.rbac.console.UserService;
+import com.example.rbac.grafana.GrafanaRes;
 import com.example.rbac.grafana.GrafanaService;
 import com.example.rbac.grafana.Org;
+import com.example.rbac.grafana.Org.OrgCreate;
+import com.example.rbac.grafana.OrgUser;
+import com.example.rbac.grafana.User.UserBuilder;
 import com.example.rbac.impl.keycloak.KeycloakConfig.CompanyProperties;
 
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.resource.GroupResource;
-import org.keycloak.admin.client.resource.GroupsResource;
 import org.keycloak.admin.client.resource.RealmResource;
 import org.keycloak.admin.client.resource.UserResource;
 import org.keycloak.representations.idm.GroupRepresentation;
@@ -119,8 +120,8 @@ public class KeycloakService implements CompanyService, ProjectService, UserServ
         keycloak.realm(company).groups().add(group);
 
         // Org org = Org.builder().name(project).build();
-        Org org = Org.builder().name(project).build();
-        Response<Org> res = grafana.create(org).execute();
+        OrgCreate org = OrgCreate.builder().name(project).build();
+        Response<OrgCreate> res = grafana.create(org).execute();
         log.info("{}", res.toString());
         log.debug("Response.body - {}", res.body());
         log.debug("Response.errorBody - {}", res.errorBody());
@@ -130,14 +131,18 @@ public class KeycloakService implements CompanyService, ProjectService, UserServ
         // TEST:
         // curl -X DELETE http://localhost:8090/companies/dummy/projects/proj-a
         try {
-            GroupsResource groups = keycloak.realm(company).groups();
-            List<GroupRepresentation> group = groups.groups(project, 0, 1);
-            if (group.isEmpty()) {
-                // TODO
-            }
+            GroupResource group = keycloak.realm(company).groups().group(project);
+            GroupRepresentation info = group.toRepresentation();
+            String name = info.getName();
+            group.remove();
 
-            groups.group(group.get(0).getId()).remove();
-        } catch (NotFoundException e) {
+            Response<Org> orgRes = grafana.getOrg(name).execute();
+            if(orgRes.code() == 200){
+                int orgId = orgRes.body().getId();
+                grafana.removeOrg(orgId).execute();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -167,12 +172,70 @@ public class KeycloakService implements CompanyService, ProjectService, UserServ
     }
 
     public void invite(String company, String groupId, String userId) {
-        UserResource user = keycloak.realm(company).users().get(userId);
-        user.joinGroup(groupId);
+        try {
+            UserResource user = keycloak.realm(company).users().get(userId);
+            user.joinGroup(groupId);
+
+            UserRepresentation info = user.toRepresentation();
+            String email = info.getEmail();
+
+            // create grafana user
+            com.example.rbac.grafana.User guser = null;
+            Response<com.example.rbac.grafana.User> res = grafana.lookup(email).execute();
+            if(res.code() != 200){
+                UserBuilder builder = com.example.rbac.grafana.User.builder();
+                builder.name(info.getUsername())
+                    .email(info.getEmail())
+                    .login(info.getEmail())
+                    .password("user");
+
+                res = grafana.create(builder.build()).execute();
+                guser = res.body();
+                log.info("{}", res.toString());
+                log.debug("Response.body - {}", res.body());
+                log.debug("Response.errorBody - {}", res.errorBody());
+            } else {
+                guser = res.body();
+            }
+
+            // join grafana user
+            GroupRepresentation group = keycloak.realm(company).groups().group(groupId).toRepresentation();
+            Response<Org> orgRes = grafana.getOrg(group.getName()).execute();
+            int orgId = orgRes.body().getId();
+            OrgUser orgUser = OrgUser.builder().loginOrEmail(email).build();
+            Response<OrgUser> resOrgUser = grafana.invite(orgId, orgUser).execute();
+            log.info("{}", resOrgUser.toString());
+            log.debug("Response.body - {}", resOrgUser.body());
+            log.debug("Response.errorBody - {}", resOrgUser.errorBody());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void leave(String company, String groupId, String userId) {
-        UserResource user = keycloak.realm(company).users().get(userId);
-        user.leaveGroup(groupId);
+        try{
+            UserResource user = keycloak.realm(company).users().get(userId);
+            UserRepresentation userInfo = user.toRepresentation();
+
+            GroupResource group = keycloak.realm(company).groups().group(groupId);
+            GroupRepresentation groupInfo = group.toRepresentation();
+
+            String groupName = groupInfo.getName();
+            String email = userInfo.getEmail();
+
+            user.leaveGroup(groupId);
+            Response<Org> orgRes = grafana.getOrg(groupName).execute();
+            Response<com.example.rbac.grafana.User> orgUserRes = grafana.lookup(email).execute();
+            if(orgRes.code() == 200 && orgUserRes.code() == 200){
+                int orgId = orgRes.body().getId();
+                int orgUserId = orgUserRes.body().getId();
+                Response<GrafanaRes> res = grafana.leave(orgId, orgUserId).execute();
+                log.info("{}", res.toString());
+                log.debug("Response.body - {}", res.body());
+                log.debug("Response.errorBody - {}", res.errorBody());
+            }
+        } catch(Exception e){
+            e.printStackTrace();
+        }
     }
 }

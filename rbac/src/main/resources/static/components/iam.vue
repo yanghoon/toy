@@ -72,6 +72,7 @@ module.exports = {
     computed: {
       'endpoints': function(){
         // https://github.com/vuejs/vue/issues/1964#issuecomment-162210972
+        // https://kr.vuejs.org/v2/guide/reactivity.html
         // console.log('endpoint_members.computed', global.realm, global.project) 
         var r = global.realm || {}, p = global.project || {}
         return {
@@ -88,16 +89,19 @@ module.exports = {
         if(!val || val && val !== (selected && selected.name))
           this.searchUser(val)
       },
-      'endpoints.members': function(nval, oval){
+      'endpoints.members': function(url){
         // console.log('endpoint_members.watch', oval, nval)
-        nval && this.getUserList()
+        url && this.getUserList()
       },
-      'endpoints.invalid': function(nval, oval){
-        if(nval == true){
-          this.items = []
-          this.form.search = ''
-        }
+      'endpoints.invalid': function(invalid){
+        if(!invalid) return
+
+        this.items = []
+        this.form.search = ''
       }
+    },
+    created: function() {
+      this.getUserList()
     },
     methods: {
       'getUserList': function(){
