@@ -2,7 +2,7 @@ package com.example.rbac.impl.keycloak;
 
 import java.util.Map;
 
-import com.example.rbac.console.CompanyService.CompanyConfig;
+import com.example.rbac.console.CompanyService.Integrations;
 
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.KeycloakBuilder;
@@ -33,16 +33,16 @@ public class KeycloakConfig {
     }
 
     @Component
-    @ConfigurationProperties(prefix = "companies")
-    public static class CompanyProperties {
-        private Map<String, CompanyConfig> config;
+    @ConfigurationProperties("")
+    public static class IntegrationProperties {
+        private Map<String, Integrations> integrations;
 
-        public void setConfig(Map<String, CompanyConfig> config) {
-            this.config = config;
+        public void setIntegrations(Map<String, Integrations> integrations) {
+            this.integrations = integrations;
         }
 
-        public CompanyConfig getConfig(String name) {
-            return config.get(name);
+        public Integrations getIntegrations(String name) {
+            return integrations.get(name);
         }
     }
 }

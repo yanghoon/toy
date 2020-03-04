@@ -1,17 +1,16 @@
 <template>
   <v-row justify="center">
     <v-col sm="10">
-      <h2>Projects</h2>
+      <v-row align="end">
+        <v-col md="auto">
+          <h2>Integrations</h2>
+        </v-col>
 
-      <v-row>
-        <v-col sm="3" class="blue-grey--text text--darken-3">
-          <v-text-field dense
-              label="+ Add Project"
-              hint="Press enter to create"
-              v-model="form.newProjName"
-              :disabled="endpoints.invalid"
-              @keyup.enter="addProj">
-          </v-text-field>
+        <v-col md="auto">
+          <v-btn small text class="blue-grey--text pb-1 text-none" to="/integration_new">
+            <v-icon>mdi-plus</v-icon>
+            <span class="body-2 font-weight-bold">Add</span>
+          </v-btn>
         </v-col>
       </v-row>
 
@@ -19,17 +18,21 @@
         <template v-slot:default>
           <thead class="blue-grey darken-4">
             <tr>
+              <th class="text-left">Kind</th>
               <th class="text-left">Name</th>
-              <th class="text-left">Groups</th>
+              <th class="text-left">Endpoints</th>
+              <th class="text-left">Attr.</th>
               <th class="text-left">Actions</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="item in items" :key="item.name">
+              <td>{{ item.kind }}</td>
               <td>{{ item.name }}</td>
-              <td>{{ item.subgroups.length }}</td>
+              <td>{{ item.endpoint }}</td>
+              <td>{{ item.attributes }}</td>
               <td>
-                <v-btn small icon class="blue-grey--text" @click="removeProj(item)">
+                <v-btn small icon class="blue-grey--text" disabled>
                   <v-icon>mdi-delete</v-icon>
                 </v-btn>
               </td>
@@ -50,9 +53,7 @@ module.exports = {
       return {
         items: [],
         loading: false,
-        form: {
-          newProjName: ''
-        }
+        form: {}
       }
     },
     computed: {
@@ -60,38 +61,26 @@ module.exports = {
         // https://github.com/vuejs/vue/issues/1964#issuecomment-162210972
         var r = global.realm || {}
         return {
-          projects: '/companies/' + r.name + '/projects',
-          projects_new: '/companies/' + r.name + '/projects/new',
+          realm: '/companies/' + r.name + '/integrations',
+          // projects_new: '/companies/' + r.name + '/projects/new',
           invalid: !r.name
         }
       }
     },
     watch: {
-      'endpoints.projects': function(url){
+      'endpoints.realm': function(url){
         if(!this.endpoints.invalid)
-          this.getProjList()
+          this.getItems()
       }
     },
-    created: function() { this.getProjList() },
     methods: {
-      'getProjList': function(){
+      'getItems': function(){
         var vm = this
-        var success = function(res){ vm.items = res.data; vm.loading = false; }
-        var url = this.endpoints.projects
+        var success = function(res){ vm.items = res.data.tools; vm.loading = false; }
+        var url = this.endpoints.realm
 
         this.loading = true
         axios.get(url).then(success)
-      },
-      'addProj': function(){
-        var url = this.endpoints.projects_new + '?project=' + this.form.newProjName
-
-        this.form.newProjName = ''
-        axios.post(url).then(this.getProjList)
-      },
-      'removeProj': function(item){
-        var url = this.endpoints.projects + '/' + item.id
-
-        axios.delete(url).then(this.getProjList)
       }
     }
   }

@@ -5,7 +5,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 import com.example.rbac.console.CompanyService.Company;
-import com.example.rbac.console.CompanyService.CompanyConfig;
+import com.example.rbac.console.CompanyService.Integrations;
 import com.example.rbac.console.ProjectService.Project;
 import com.example.rbac.console.UserService.User;
 
@@ -61,9 +61,9 @@ public class ConsoleController {
 		return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/companies/{realm}/config")
-    public CompanyConfig config(@PathVariable String realm) {
-        return companies.config(realm);
+    @GetMapping("/companies/{realm}/integrations")
+    public Integrations integrations(@PathVariable String realm) {
+        return companies.integrations(realm);
     }
 
     /**

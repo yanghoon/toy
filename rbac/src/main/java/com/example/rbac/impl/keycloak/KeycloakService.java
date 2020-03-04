@@ -13,7 +13,7 @@ import com.example.rbac.grafana.Org;
 import com.example.rbac.grafana.Org.OrgCreate;
 import com.example.rbac.grafana.OrgUser;
 import com.example.rbac.grafana.User.UserBuilder;
-import com.example.rbac.impl.keycloak.KeycloakConfig.CompanyProperties;
+import com.example.rbac.impl.keycloak.KeycloakConfig.IntegrationProperties;
 
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.resource.GroupResource;
@@ -39,7 +39,7 @@ public class KeycloakService implements CompanyService, ProjectService, UserServ
     private Keycloak keycloak;
 
     @Autowired
-    private CompanyProperties config;
+    private IntegrationProperties integrations;
 
     private Company toCompany(RealmRepresentation r) {
         String name = r.getRealm();
@@ -89,8 +89,8 @@ public class KeycloakService implements CompanyService, ProjectService, UserServ
         res.remove();
     }
 
-    public CompanyConfig config(String name) {
-        return config.getConfig(name);
+    public Integrations integrations(String name) {
+        return integrations.getIntegrations(name);
     }
 
     /**

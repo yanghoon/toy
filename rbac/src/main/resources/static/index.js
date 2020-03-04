@@ -1,7 +1,7 @@
 // https://www.npmjs.com/package/http-vue-loader
 // https://medium.com/@jamesweee/using-vue-js-single-file-component-without-module-bundlers-aea58d892ad9
 // - Custom Component
-var names = ['realms', 'projects', 'config', 'iam']
+var names = ['realms', 'projects', 'config', 'iam', 'integrations', 'integration_new', 'roles', 'role_detail']
 var comps = names.reduce(function(a, v){ a[v] = httpVueLoader('components/' + v + '.vue'); return a; }, {})
 var routes = Object.keys(comps).reduce(function(a, v) { a.push( {path: '/' + v, component: comps[v]} ); return a; }, [])
 var router = new VueRouter({ routes: routes })
@@ -24,72 +24,86 @@ var global = {
 }
 
 var app = new Vue({
-    el: '#app',
-    // vuetify: new Vuetify(),
-    router: router,
-    vuetify: vuetify,
-    data: {
-        drawer: true,
-        items: {
-            // https://vuetifyjs.com/ko/components/lists
-            // http://code.meta-platform.com/assets/mdi/preview.html
-            'Applications': [
-                { title: 'Home', icon: 'mdi-home' },
-                { title: 'IAM', icon: 'mdi-account-key', link: '/iam' },
-                { title: 'CI/CD', icon: 'mdi-source-pull' },
-                { title: 'Settings', icon: 'mdi-book-variant' },
-            ],
-            'Administrator': [
-                { title: 'Realms', icon: 'mdi-sitemap', link: '/realms' },
-                { title: 'Projects', icon: 'mdi-presentation', link: '/projects' },
-                { title: 'Config', icon: 'mdi-settings', link: '/config' }
-            ]
-        },
-        selected: 'Realms',
-        miniVariant: false,
-        global: global,
-        realms: [],
-        projects: []
+  el: "#app",
+  // vuetify: new Vuetify(),
+  router: router,
+  vuetify: vuetify,
+  data: {
+    drawer: true,
+    items: {
+      // https://vuetifyjs.com/ko/components/lists
+      // http://code.meta-platform.com/assets/mdi/preview.html
+      Settings: [
+        { title: "IAM", icon: "mdi-account-key", link: "/iam" },
+        { title: "Roles", icon: "mdi-clipboard-account", link: "/roles" }
+      ],
+      Applications: [
+        { title: "Home", icon: "mdi-home" },
+        { title: "CI/CD", icon: "mdi-source-pull" },
+        { title: "Settings", icon: "mdi-book-variant" }
+      ],
+      Administrator: [
+        { title: "Realms", icon: "mdi-sitemap", link: "/realms" },
+        { title: "Projects", icon: "mdi-presentation", link: "/projects" },
+        { title: "Integrations", icon: "mdi-settings", link: "/integrations" }
+        // { title: 'Config', icon: 'mdi-settings', link: '/config' }
+      ]
     },
-    components: comps,
-    created: function(){
-        this.getRealms()
-        // this.getProjects()
-    },
-    wacth: {
-        'global.realm': {
-            hanlder: function(){
-                console.log('global.realm is changed')
-                this.getProjects()
-            },
-            deep: true
-        }
-    },
-    methods: {
-        'getRealms': function(){
-            var vm = this
-            var success = function (res) { vm.realms = res.data; }
-            axios.get('/companies').then(success).then(this.selectRealm)
-        },
-        'getProjects': function(){
-            var vm = this
-            var success = function (res) { vm.projects = res.data; }
-            var url = '/companies/' + (this.global.realm.name || 'dummy') + '/projects'
-
-            this.global.project = {}
-            axios.get(url).then(success).then(this.selectProject)
-        },
-        'selectRealm': function(){
-            if(!this.global.realm.name){
-                this.global.realm = this.realms[0]
-                this.getProjects()
-            }
-        },
-        'selectProject': function(){
-            var p = this.global.project
-            console.log('project', p)
-            if(!p || !p.name)
-                this.global.project = this.projects[0]
-        }
+    selected: "Realms",
+    miniVariant: false,
+    global: global,
+    realms: [],
+    projects: []
+  },
+  components: comps,
+  created: function() {
+    this.getRealms();
+    // this.getProjects()
+  },
+  wacth: {
+    "global.realm": {
+      hanlder: function() {
+        console.log("global.realm is changed");
+        this.getProjects();
+      },
+      deep: true
     }
-})
+  },
+  methods: {
+    getRealms: function() {
+      var vm = this;
+      var success = function(res) {
+        vm.realms = res.data;
+      };
+      axios
+        .get("/companies")
+        .then(success)
+        .then(this.selectRealm);
+    },
+    getProjects: function() {
+      var vm = this;
+      var success = function(res) {
+        vm.projects = res.data;
+      };
+      var url =
+        "/companies/" + (this.global.realm.name || "dummy") + "/projects";
+
+      this.global.project = {};
+      axios
+        .get(url)
+        .then(success)
+        .then(this.selectProject);
+    },
+    selectRealm: function() {
+      if (!this.global.realm.name) {
+        this.global.realm = this.realms[0];
+        this.getProjects();
+      }
+    },
+    selectProject: function() {
+      var p = this.global.project;
+      console.log("project", p);
+      if (!p || !p.name) this.global.project = this.projects[0];
+    }
+  }
+});
