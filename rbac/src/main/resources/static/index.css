@@ -1,4 +1,14 @@
-html, body {
-    margin: 5px;
-    padding: 0;
+/* https://github.com/vuetifyjs/vuetify/issues/9285 */
+.v-list-item-group > .theme--dark.v-list-item:not(.v-list-item--active):not(.v-list-item--disabled){ color: #78909C !important; }
+.v-list-item-group > .theme--dark.v-list-item:not(.v-list-item--active):not(.v-list-item--disabled) .theme--dark.v-icon { color: #78909C !important; }
+.not-implemented * { text-decoration: line-through; color: #78909C !important; }
+
+tr .v-select.v-text-field>.v-input__control>.v-input__slot:before {
+  border-color: #455A64;  /* blue-grey darken-2 */
+  /* border-style: none; */
+}
+
+.v-data-table.wide td {
+  padding-top: 20px;
+  padding-bottom: 20px;
 }

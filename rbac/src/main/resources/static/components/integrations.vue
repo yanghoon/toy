@@ -73,6 +73,7 @@ module.exports = {
           this.getItems()
       }
     },
+    created: function(){ this.getItems() },
     methods: {
       'getItems': function(){
         var vm = this

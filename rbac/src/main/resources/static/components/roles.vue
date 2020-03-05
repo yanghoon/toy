@@ -20,7 +20,7 @@
                 <v-btn small icon class="blue-grey--text" :disabled="item.type != 'custom'" to="/role_detail">
                   <v-icon>mdi-pencil</v-icon>
                 </v-btn>
-                <v-btn small icon class="blue-grey--text" disabled>
+                <v-btn small icon class="blue-grey--text" :disabled="item.type != 'custom'">
                   <v-icon>mdi-delete</v-icon>
                 </v-btn>
               </td>

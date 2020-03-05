@@ -30,6 +30,7 @@
             <tr>
               <th class="text-left">Name</th>
               <th class="text-left">Email</th>
+              <th class="text-left">Roles</th>
               <th class="text-left">Actions</th>
             </tr>
           </thead>
@@ -37,6 +38,9 @@
             <tr v-for="item in items" :key="item.name">
               <td>{{ item.name }}</td>
               <td>{{ item.email }}</td>
+              <td>
+                <v-select :items="roles" placeholder="Roles" dense falt hide-details class="caption"></v-select>
+              </td>
               <td>
                 <v-btn small icon class="blue-grey--text" @click="leaveUser(item)">
                   <v-icon>mdi-delete</v-icon>
@@ -59,6 +63,7 @@ module.exports = {
       return {
         items: [],
         loading: false,
+        roles: ['Admin', 'Developer', 'Viewer', 'Project1_Admin'],
         form: {
           newProjName: '',
           selected: '',
