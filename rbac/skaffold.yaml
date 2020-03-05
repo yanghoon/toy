@@ -1,0 +1,15 @@
+apiVersion: skaffold/v2alpha4
+kind: Config
+metadata:
+  name: rbac
+build:
+  artifacts:
+  - image: yoon5/console-rbac
+    jib: {}
+deploy:
+  kubectl:
+    manifests:
+    - deploy.yaml
+    - deploy/deploy.yaml
+    - deploy/ingress.yaml
+    - deploy/service.yaml

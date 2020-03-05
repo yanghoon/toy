@@ -1,11 +1,11 @@
 #!/bin/bash
 export KUBECONFIG=$(k3d get-kubeconfig)
 
-kubectl delete ns keycloak
+# kubectl delete ns keycloak
 kubectl create ns keycloak
 
-kubectl delete secret generic realm-secret -n keycloak
-kubectl create secret generic realm-secret -n keycloak --from-file=keycloak-realm.json
+# kubectl delete secret generic realm-secret -n keycloak
+# kubectl create secret generic realm-secret -n keycloak --from-file=realm-export-master.json
 
 helm repo add codecentric https://codecentric.github.io/helm-charts
 helm repo update
@@ -26,18 +26,18 @@ keycloak:
   # resources: {}
 
   # extraVolumes: |-
-  # - name: theme
-  #   emptyDir: {}
-  # - name: keycloak-realm
-  #   secret:
-  #     secretName: keycloak-realm
+    # - name: realm-secret
+    #   secret:
+    #     secretName: realm-secret
+    # - name: theme
+    #   emptyDir: {}
   # extraVolumeMounts: |-
-  # - name: theme
-  #   mountPath: /opt/jboss/keycloak/themes/company
-  # - name: realm-secret
-  #   mountPath: /realm/
-  #   readOnly: true
-  # extraArgs: -Dkeycloak.import=/realm/keycloak-realm.json
+    # - name: realm-secret
+    #   mountPath: /realm/
+    #   readOnly: true
+    # - name: theme
+    #   mountPath: /opt/jboss/keycloak/themes/company
+  # extraArgs: -Dkeycloak.import=/realm/realm-export-master.json
   # extraInitContainers: |
   #   - name: theme-provider
   #     image: repo/custom-theme-img:latest

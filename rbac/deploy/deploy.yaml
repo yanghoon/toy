@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: console-rbac
+  name: console-rbac
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: console-rbac
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: console-rbac
+    spec:
+      containers:
+      - env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: dev
+        image: yoon5/console-rbac:latest
+        name: console-rbac
+        ports:
+        - containerPort: 8080
+        resources: {}
+status: {}

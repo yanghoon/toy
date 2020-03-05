@@ -1,0 +1,13 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: console-rbac
+spec:
+  rules:
+  - host: console.local
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: console-rbac
+          servicePort: 80

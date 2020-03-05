@@ -1,4 +1,5 @@
 plugins {
+	id 'com.google.cloud.tools.jib' version '1.8.0'
 	id 'org.springframework.boot' version '2.2.4.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
 	id 'java'
@@ -37,4 +38,27 @@ dependencies {
 
 test {
 	useJUnitPlatform()
+}
+
+jib {
+    from {
+        image = "openjdk:8-jre-alpine"
+    }
+    to {
+        image = "yoon5/console-rbac"
+        // tags = ["${project.version}".toString(), "${BUILD_VERSION}".toString()]
+        tags = ["${project.version}".toString()]
+        // credHelper = "pass"
+        credHelper = "osxkeychain"
+    }
+    container {
+        mainClass = "com.example.rbac.RbacApplication"
+        ports = ["8080"]
+        volumes = ["/tmp"]
+		environment = [
+            // "JAVA_TOOL_OPTIONS": "-Xmx2048m -XX:+UseG1GC",
+            // "SPRING_PROFILES_ACTIVE": "dev",
+            "TZ": "Asia/Seoul"
+        ]
+    }
 }
