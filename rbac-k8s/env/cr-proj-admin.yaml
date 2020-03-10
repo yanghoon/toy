@@ -1,0 +1,17 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+#   annotations:
+#     rbac.authorization.kubernetes.io/autoupdate: "true"
+#   labels:
+#     kubernetes.io/bootstrapping: rbac-defaults
+  name: console:proj:admin
+rules:
+- apiGroups:
+  - ''
+  resources:
+  # - pods
+  - serviceaccounts
+  - nodes
+  verbs:
+  - '*'
