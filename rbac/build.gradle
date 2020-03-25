@@ -23,8 +23,9 @@ dependencies {
 	implementation 'com.squareup.retrofit2:converter-jackson:2.3.0'
 	implementation 'com.squareup.okhttp3:logging-interceptor:3.8.0'
 	// Lombok - https://projectlombok.org/setup/gradle
-	compileOnly 'org.projectlombok:lombok'
+	implementation 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
+	testAnnotationProcessor 'org.projectlombok:lombok'
 
 	// Keycloak
 	implementation 'org.keycloak:keycloak-admin-client:8.0.0'
@@ -33,7 +34,11 @@ dependencies {
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
+	testImplementation 'com.namics.oss:java-random:1.1.7'
 	runtimeOnly 'org.springframework.boot:spring-boot-devtools'
+
+	// Utils
+	implementation("com.google.guava:guava:28.2-jre")
 }
 
 test {
