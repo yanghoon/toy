@@ -25,5 +25,12 @@ spec:
         name: console-rbac
         ports:
         - containerPort: 8080
+        volumeMounts:
+        - name: vol-config
+          mountPath: /config
         resources: {}
+      volumes:
+      - name: vol-config
+        configMap:
+          name: console-rbac
 status: {}

@@ -48,8 +48,7 @@ jib {
         image = "yoon5/console-rbac"
         // tags = ["${project.version}".toString(), "${BUILD_VERSION}".toString()]
         tags = ["${project.version}".toString()]
-        // credHelper = "pass"
-        credHelper = "osxkeychain"
+        credHelper = "osxkeychain"  // "pass"
     }
     container {
         mainClass = "com.example.rbac.RbacApplication"

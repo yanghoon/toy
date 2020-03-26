@@ -3,9 +3,11 @@ package com.example.rbac.console;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Map;
 
 import com.example.rbac.console.CompanyService.Company;
 import com.example.rbac.console.CompanyService.Integrations;
+import com.example.rbac.console.CompanyService.Tool;
 import com.example.rbac.console.ProjectService.Project;
 import com.example.rbac.console.UserService.User;
 
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 // import org.springframework.web.servlet.function.ServerResponse;
@@ -124,4 +127,23 @@ public class ConsoleController {
     //     projects.remove(realm, project);
     //     return ResponseEntity.ok().build();
     // }
+
+    /**
+     * for Config
+     */
+    @Autowired
+    private ConsoleProperties config;
+
+    @GetMapping("/config")
+    public Object configs() {
+        return config.getConsole();
+    }
+
+    @PutMapping("/config")
+    public ResponseEntity<?> configs(@RequestBody Map<String, Tool> config) {
+        this.config.set("auth", config.get("auth"));
+        // RbacApplication.restart(3000);
+        // refresher.
+        return ResponseEntity.ok().build();
+    }
 }

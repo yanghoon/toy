@@ -1,9 +1,9 @@
 // https://www.npmjs.com/package/http-vue-loader
 // https://medium.com/@jamesweee/using-vue-js-single-file-component-without-module-bundlers-aea58d892ad9
 // - Custom Component
-var names = ['realms', 'projects', 'config', 'iam', 'integrations', 'integration_new', 'roles', 'role_detail']
+var names = ['realms', 'projects', 'config', 'iam', 'integrations', 'integration_detail', 'roles', 'role_detail']
 var comps = names.reduce(function(a, v){ a[v] = httpVueLoader('components/' + v + '.vue'); return a; }, {})
-var routes = Object.keys(comps).reduce(function(a, v) { a.push( {path: '/' + v, component: comps[v]} ); return a; }, [])
+var routes = Object.keys(comps).reduce(function (a, v) { a.push({ name: v, path: '/' + v, component: comps[v], props: true } ); return a; }, [])
 var router = new VueRouter({ routes: routes })
 
 // https://vuetifyjs.com/ko/customization/theme#%EB%B0%9D%EA%B2%8C-%EC%96%B4%EB%91%A1%EA%B2%8C-light-and-dark
@@ -46,7 +46,10 @@ var app = new Vue({
         { title: "Realms", icon: "mdi-sitemap", link: "/realms" },
         { title: "Projects", icon: "mdi-presentation", link: "/projects" },
         { title: "Integrations", icon: "mdi-settings", link: "/integrations" }
-        // { title: 'Config', icon: 'mdi-settings', link: '/config' }
+      ],
+      Configuration: [
+        { title: "Menus", icon: "mdi-table-edit", link: "/realms" },
+        { title: 'Preferences', icon: 'mdi-settings', link: '/config' }
       ]
     },
     selected: "Realms",

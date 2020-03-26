@@ -1,7 +1,6 @@
 package com.example.rbac.grafana;
 
 import com.example.rbac.grafana.Org.OrgCreate;
-import com.example.rbac.grafana.Org.OrgDelete;
 
 import retrofit2.Call;
 import retrofit2.http.Body;

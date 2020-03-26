@@ -7,7 +7,7 @@
         </v-col>
 
         <v-col md="auto">
-          <v-btn small text class="blue-grey--text pb-1 text-none" to="/integration_new">
+          <v-btn small text class="blue-grey--text pb-1 text-none" to="/integration_detail">
             <v-icon>mdi-plus</v-icon>
             <span class="body-2 font-weight-bold">Add</span>
           </v-btn>
@@ -32,7 +32,10 @@
               <td>{{ item.endpoint }}</td>
               <td>{{ item.attributes }}</td>
               <td>
-                <v-btn small icon class="blue-grey--text" disabled>
+                <v-btn small icon class="blue-grey--text" :to="'/integration_detail?name=' + item.name">
+                  <v-icon>mdi-pencil</v-icon>
+                </v-btn>
+                <v-btn small icon class="blue-grey--text">
                   <v-icon>mdi-delete</v-icon>
                 </v-btn>
               </td>

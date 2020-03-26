@@ -11,6 +11,19 @@
 #           realm: master
 #           user: keycloak
 #           client-id: master-realm
+console:
+  auth:
+    kind: keycloak
+    name: keycloak
+    endpoint: http://keycloak/auth
+    attributes:
+      realm: master
+      username: keycloak
+      password: keycloak
+      client-id: master-realm
+      client-secret: 
+
+test-realm: dummy
 
 integrations:
   master:
@@ -27,6 +40,9 @@ integrations:
     - kind: grafana
       name: grafana
       endpoint: http://grafana.local:8080/login/generic_oauth
+      attributes:
+        username: admin
+        password: admin
     - kind: grafana
       name: grafana-2
       endpoint: http://grafana.local:8080/login/generic_oauth

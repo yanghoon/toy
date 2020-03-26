@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: console-rbac
+  namespace: console
+data:
+  application-dev.yaml: |
+    console:
+      auth:
+        kind: keycloak
+        name: keycloak
+        endpoint: http://keycloak.local:8080/auth
+        attributes:
+          realm: master
+          username: keycloak
+          password: keycloak
+          client-id: master-realm
+          client-secret: 
+
+    test-realm: zcp
+
+    integrations:
+      zcp:
+        tools:
+        - kind: grafana
+          name: grafana
+          endpoint: http://grafana.local:8080/login/generic_oauth
+          attributes:
+            username: admin
+            password: 
+        - kind: grafana
+          name: grafana-dummy
+          endpoint: http://grafana.local:8080/login/generic_oauth
+        - kind: jenkins
+          name: jenkins-dummy
+          endpoint: http://jenkins.local:8080

@@ -1,5 +1,23 @@
-# Init
-## Manifests
+# Build
+```bash
+# configure files in deploy/*.yaml
+$ kubectl create ns console
+$ skaffold build
+```
+
+# Debug & Deploy
+```bash 
+$ skaffold dev -n console
+$ skaffold run -n console
+```
+
+- https://skaffold.dev/docs/pipeline-stages/init/
+- https://github.com/GoogleContainerTools/jib/tree/master/jib-gradle-plugin#authentication-methods
+- https://github.com/GoogleContainerTools/jib/tree/master/jib-gradle-plugin#using-docker-credential-helpers
+- https://www.baeldung.com/jib-dockerizing
+
+# Setup - Skaffold
+## Generate Manifests
 ```bash
 $ kubectl run console-rbac \
     --labels='app=console-rbac' \
@@ -110,16 +128,3 @@ You can now run [skaffold build] to build the artifacts
 or [skaffold run] to build and deploy
 or [skaffold dev] to enter development mode, with auto-redeploy
 ```
-
-# Build
-```bash
-$ kubectl create ns console
-
-$ skaffold build
-$ skaffold dev -n console
-```
-
-- https://skaffold.dev/docs/pipeline-stages/init/
-- https://github.com/GoogleContainerTools/jib/tree/master/jib-gradle-plugin#authentication-methods
-- https://github.com/GoogleContainerTools/jib/tree/master/jib-gradle-plugin#using-docker-credential-helpers
-- https://www.baeldung.com/jib-dockerizing
