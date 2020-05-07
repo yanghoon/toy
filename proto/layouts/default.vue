@@ -9,7 +9,7 @@
 
       <v-list-item class="logo">
         <v-list-item-content py-10>
-          <v-list-item-title class="title">
+          <v-list-item-title class="til">
             Application
           </v-list-item-title>
           <v-list-item-subtitle class="sub">
@@ -158,7 +158,7 @@ export default {
 /* .logo.v-list-item:not(.v-list-item--active) { background-color: #7ae8ce; } */
 /* .logo.v-list-item:not(.v-list-item--active) { background-color: rgb(24, 167, 204); } */
 /* .logo.v-list-item:not(.v-list-item--active) { background-color: #0f4c81; } */
-.logo.v-list-item:not(.v-list-item--active) .title { color: #fff; font-weight: bold; }
+.logo.v-list-item:not(.v-list-item--active) .til { color: #fff; font-weight: bold; }
 .logo.v-list-item:not(.v-list-item--active) .sub { color: #fff; }
 
 .v-navigation-drawer .v-divider { border-color: rgba(239, 239, 239, 0.3); padding-left: 10px; }
@@ -167,4 +167,6 @@ export default {
 .v-app-bar { background-color: #fafafa !important; box-shadow: none; } */
 .v-content { background-color: #e7ecef; }
 .v-app-bar { background-color: #e7ecef !important; box-shadow: none; }
+
+.v-application { font-family: "Nanum Gothic", sans-serif !important; }
 </style>

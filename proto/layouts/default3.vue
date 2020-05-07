@@ -3,24 +3,11 @@
     <v-navigation-drawer
       v-model="drawer"
       :mini-variant="miniVariant"
-      :clipped="clipped"
+      clipped
       fixed
       app>
 
-      <v-list-item class="logo">
-        <v-list-item-content py-10>
-          <v-list-item-title class="title">
-            Application
-          </v-list-item-title>
-          <!-- <v-list-item-subtitle class="sub">
-            subtext
-          </v-list-item-subtitle> -->
-        </v-list-item-content>
-      </v-list-item>
-
-      <v-divider></v-divider>
-
-      <v-list nav flat dense expand>
+      <v-list nav dense>
         <v-list-item-group mandatory v-model="selected">
           <template v-for="(val, name) in items">
             <v-subheader class="text-uppercase" :key="name">
@@ -45,7 +32,7 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar :clipped-left="clipped" app fixed elevation-0 class="primary">
+    <v-app-bar clipped-left fixed app elevation-0 class="primary">
       <!-- <v-app-bar-nav-icon @click.stop="drawer = !drawer" /> -->
 
     <!--
@@ -61,6 +48,10 @@
     -->
 
       <!-- <v-toolbar-title v-text="title" /> -->
+      <v-list-item-title class="til">
+        Application
+      </v-list-item-title>
+
       <v-spacer />
       <!--
       <v-btn icon @click.stop="rightDrawer = !rightDrawer">
@@ -161,7 +152,7 @@ export default {
 /* .logo.v-list-item:not(.v-list-item--active) { background-color: #7ae8ce; } */
 /* .logo.v-list-item:not(.v-list-item--active) { background-color: rgb(24, 167, 204); } */
 .logo.v-list-item:not(.v-list-item--active) { background-color: #0f4c81; }
-.logo.v-list-item:not(.v-list-item--active) .title { color: #fff; font-weight: bold; }
+.logo.v-list-item:not(.v-list-item--active) .til { color: #fff; font-weight: bold; }
 .logo.v-list-item:not(.v-list-item--active) .sub { color: #fff; }
 
 .v-navigation-drawer .v-divider { border-color: rgba(239, 239, 239, 0.3); padding-left: 10px; }
@@ -169,6 +160,8 @@ export default {
 /* .v-content { background-color: #fafafa; }
 .v-app-bar { background-color: #fafafa !important; box-shadow: none; } */
 .v-content { background-color: #e7ecef; }
-.v-app-bar { color: #fff !important; height: 56px !important; box-shadow: none; }
-.v-app-bar * { color: #fff !important; }
+.v-app-bar { color: #fff !important; box-shadow: none; }
+.v-app-bar * { color: #fff !important; font-weight: bold; }
+
+.v-application { font-family: "Nanum Gothic", sans-serif !important; }
 </style>
