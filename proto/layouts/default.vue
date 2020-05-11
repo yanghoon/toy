@@ -4,7 +4,7 @@
       v-model="drawer"
       :mini-variant="miniVariant"
       :clipped="clipped"
-      fixed
+      fixed class="elevation-9"
       app>
 
       <v-list-item class="logo">

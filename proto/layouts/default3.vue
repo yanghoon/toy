@@ -4,7 +4,7 @@
       v-model="drawer"
       :mini-variant="miniVariant"
       clipped
-      fixed
+      fixed class="elevation-1"
       app>
 
       <v-list nav dense>
