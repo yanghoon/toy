@@ -48,8 +48,11 @@
     -->
 
       <!-- <v-toolbar-title v-text="title" /> -->
-      <v-list-item-title class="til">
-        Application
+      <v-btn icon disabled class="logo mx-1">
+        <img class="logo-svg" src="~/assets/logo.svg" />
+      </v-btn>
+      <v-list-item-title class="til logo">
+        <span>Application</span>
       </v-list-item-title>
 
       <v-spacer />
@@ -164,4 +167,6 @@ export default {
 .v-app-bar * { color: #fff !important; font-weight: bold; }
 
 .v-application { font-family: "Nanum Gothic", sans-serif !important; }
+
+.logo .logo-svg { margin-right: 16px; width: 40px; height: 40px; }
 </style>

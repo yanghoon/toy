@@ -8,6 +8,8 @@
       app>
 
       <v-list-item class="logo" @click="nanum != nanum">
+        <img class="logo-svg" src="~/assets/logo.svg" />
+
         <v-list-item-content py-10>
           <v-list-item-title class="til">
             Application
@@ -43,34 +45,26 @@
           </template>
         </v-list-item-group>
       </v-list>
+
+      <!--
+      <template v-slot:append>
+        <v-divider />
+        <div class="pa-2">
+          <v-btn text class="primary body-2 font-weight-bold" to="/home">
+            <v-icon>mdi-cog</v-icon>
+            <span class="ml-3 mr-10">
+            System Admin
+            </span>
+            <v-icon>mdi-chevron-right</v-icon>
+          </v-btn>
+        </div>
+      </template>
+      -->
     </v-navigation-drawer>
 
     <v-app-bar :clipped-left="clipped" app fixed dense elevation-0>
-      <!-- <v-app-bar-nav-icon @click.stop="drawer = !drawer" /> -->
-
-    <!--
-      <v-btn icon @click.stop="miniVariant = !miniVariant">
-        <v-icon>mdi-{{ `chevron-${miniVariant ? 'right' : 'left'}` }}</v-icon>
-      </v-btn>
-      <v-btn icon @click.stop="clipped = !clipped">
-        <v-icon>mdi-application</v-icon>
-      </v-btn>
-      <v-btn icon @click.stop="fixed = !fixed">
-        <v-icon>mdi-minus</v-icon>
-      </v-btn>
-    -->
-
-    <!--
-      <v-toolbar-title>
-        <h2 class="primary--text" style="padding-left: 25px; padding-top: 30px">Authority</h2>
-      </v-toolbar-title>
-    -->
       <v-spacer />
-      <!--
-      <v-btn icon @click.stop="rightDrawer = !rightDrawer">
-        <v-icon>mdi-menu</v-icon>
-      </v-btn>
-      -->
+
       <v-btn text>
         Platform Admin
       </v-btn>
@@ -81,29 +75,7 @@
         <nuxt />
       </v-container>
     </v-content>
-    <v-navigation-drawer
-      v-model="rightDrawer"
-      :right="right"
-      temporary
-      fixed
-    >
-      <v-list>
-        <v-list-item @click.native="right = !right">
-          <v-list-item-action>
-            <v-icon light>
-              mdi-repeat
-            </v-icon>
-          </v-list-item-action>
-          <v-list-item-title>Switch drawer (click me)</v-list-item-title>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
 
-    <!--
-    <v-footer :fixed="fixed" app>
-      <span>&copy; {{ new Date().getFullYear() }}</span>
-    </v-footer>
-    -->
   </v-app>
 </template>
 
@@ -116,27 +88,20 @@ export default {
       drawer: true,
       fixed: false,
       items: {
-        Applications: [
-          { title: "Home", icon: "mdi-home", link: "/home" },
-          { title: "CI/CD", icon: "mdi-source-pull" },
-          { title: "Logging", icon: "mdi-book-variant" },
-          { title: "Monitoring", icon: "mdi-book-variant" }
+        'System Config': [
+          { title: "Clusters", icon: "mdi-home", link: "/master/clusters" },
+          { title: "Projects", icon: "mdi-source-pull", link: "/master/proj" },
+          { title: "Tools", icon: "mdi-book-variant", link: "/master/tools" },
+          { title: "Users", icon: "mdi-book-variant", link: "/master/users" },
+          { title: "Groups", icon: "mdi-book-variant", link: "/master/groups" },
+          { title: "Roles", icon: "mdi-book-variant", link: "/master/roles" }
         ],
-        'Project Config': [
-          { title: "Authrity", icon: "mdi-account-key", link: "/iam" },
-          { title: "Roles", icon: "mdi-clipboard-account", link: "" },
-          { title: "Groups", icon: "mdi-clipboard-account", link: "" },
-          { title: "Settings", icon: "mdi-clipboard-account", link: "" }
+        'Platform Config': [
+          { title: "Realms", icon: "mdi-account-key", link: "/platform/realms" },
+          { title: "Menus", icon: "mdi-clipboard-account", link: "/platform/menus" },
+          { title: "Notice", icon: "mdi-clipboard-account", link: "/platform/notice" },
+          { title: "Preferences", icon: "mdi-clipboard-account", link: "/platform/pref" }
         ],
-        // Administrator: [
-        //   { title: "Realms", icon: "mdi-sitemap", link: "/realms" },
-        //   { title: "Projects", icon: "mdi-presentation", link: "/projects" },
-        //   { title: "Integrations", icon: "mdi-settings", link: "/integrations" }
-        // ],
-        // Configuration: [
-        //   { title: "Menus", icon: "mdi-table-edit", link: "/realms" },
-        //   { title: 'Preferences', icon: 'mdi-settings', link: '/config' }
-        // ]
       },
       miniVariant: false,
       right: true,
@@ -177,4 +142,6 @@ export default {
 .v-app-bar { background-color: #e7ecef !important; box-shadow: none; }
 
 .nanum { font-family: "Nanum Gothic", sans-serif !important; }
+
+.logo .logo-svg { margin-right: 16px; width: 40px; height: 40px; }
 </style>

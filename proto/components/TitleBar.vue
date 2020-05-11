@@ -1,7 +1,7 @@
 <template>
     <v-col cols="12" px-4>
 
-      <h1 class="primary--text text-bold">Authority</h1>
+      <h1 class="primary--text text-bold text-capitalize">{{ $route.params.kind }}</h1>
 
       <!-- <v-btn class="secondary">add</v-btn> -->
 

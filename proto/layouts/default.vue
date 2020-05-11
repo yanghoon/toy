@@ -8,6 +8,8 @@
       app>
 
       <v-list-item class="logo">
+        <img class="logo-svg" src="~/assets/logo.svg" />
+
         <v-list-item-content py-10>
           <v-list-item-title class="til">
             Application
@@ -43,6 +45,15 @@
           </template>
         </v-list-item-group>
       </v-list>
+
+      <template v-slot:append>
+        <v-divider />
+        <v-btn text x-large class="white--text body-2 font-weight-bold" to="/master/clusters">
+          <v-icon>mdi-cog</v-icon>
+          <span class="ml-3 mr-12">System Admin</span>
+          <v-icon>mdi-chevron-right</v-icon>
+        </v-btn>
+      </template>
     </v-navigation-drawer>
 
     <v-app-bar :clipped-left="clipped" app dense elevation-0>
@@ -112,16 +123,16 @@ export default {
       fixed: false,
       items: {
         Applications: [
-          { title: "Home", icon: "mdi-home", link: "/home" },
-          { title: "CI/CD", icon: "mdi-source-pull" },
-          { title: "Logging", icon: "mdi-book-variant" },
-          { title: "Monitoring", icon: "mdi-book-variant" }
+          { title: "Home", icon: "mdi-home", link: "/master/p/home" },
+          { title: "CI/CD", icon: "mdi-source-pull", link: "/master/p/cicd" },
+          { title: "Logging", icon: "mdi-book-variant", link: "/master/p/logging" },
+          { title: "Monitoring", icon: "mdi-book-variant", link: "/master/p/monitoring" }
         ],
         'Project Config': [
-          { title: "Authrity", icon: "mdi-account-key", link: "/iam" },
-          { title: "Roles", icon: "mdi-clipboard-account", link: "" },
-          { title: "Groups", icon: "mdi-clipboard-account", link: "" },
-          { title: "Settings", icon: "mdi-clipboard-account", link: "" }
+          { title: "Authrity", icon: "mdi-account-key", link: "/master/p/authority" },
+          { title: "Roles", icon: "mdi-clipboard-account", link: "/master/p/roles" },
+          { title: "Groups", icon: "mdi-clipboard-account", link: "/master/p/groups" },
+          { title: "Settings", icon: "mdi-clipboard-account", link: "/master/p/settings" }
         ],
         // Administrator: [
         //   { title: "Realms", icon: "mdi-sitemap", link: "/realms" },
@@ -169,4 +180,6 @@ export default {
 .v-app-bar { background-color: #e7ecef !important; box-shadow: none; }
 
 .v-application { font-family: "Nanum Gothic", sans-serif !important; }
+
+.logo .logo-svg { margin-right: 16px; width: 40px; height: 40px; }
 </style>

@@ -9,7 +9,7 @@
               @blur="searching = false">
           </v-text-field>
 
-          <v-btn depressed class="secondary ml-3">Add</v-btn>
+          <v-btn depressed small class="secondary ml-3">Add</v-btn>
         </v-card-actions>
 
         <v-row class="pa-0 mt-n1 pb-3 ml-8" v-if="searching">
