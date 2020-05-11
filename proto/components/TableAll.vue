@@ -1,4 +1,149 @@
 <template>
+  <v-row column class="px-12 mt-n5">
+    <!--
+    <v-flex xs12 pa-10 pt-12 class="title">
+      <h2>Groups</h2>
+    </v-flex>
+    -->
+
+    <v-col cols="12" px-4>
+
+      <h1 class="primary--text text-bold">Authority</h1>
+
+      <!-- <v-btn class="secondary">add</v-btn> -->
+
+      <v-tabs mt-10 color="#1173ce" background-color="#e7ecef" v-model="tab">
+        <v-tab class="font-weight-black">Users</v-tab>
+        <v-tab class="font-weight-black">Groups</v-tab>
+        <v-tab class="font-weight-black">
+          Join
+          <v-chip x-small label class="noti info font-weight-black caption">3</v-chip>
+        </v-tab>
+      </v-tabs>
+      <v-divider></v-divider>
+    </v-col>
+
+    <!--
+    <v-col cols="7">
+      <v-card class="px-3">
+        <v-card-actions class="pa-0 pb-n1">
+          <v-text-field placeholder="Search" prepend-icon="mdi-magnify" clearable
+              filled dense hide-details background-color="#fff"
+              :loading="!!keyword"
+              v-model="keyword"
+              @focus="searching = true"
+              @blur="searching = false">
+          </v-text-field>
+          <v-btn depressed class="secondary ml-3">Add</v-btn>
+        </v-card-actions>
+
+        <v-row class="pa-0 mt-4 pb-3 ml-8" v-if="searching">
+          <v-btn-toggle dense rounded class="mr-5">
+            <v-btn small class="caption">admin</v-btn>
+            <v-btn small class="caption">editor</v-btn>
+            <v-btn small class="caption">user</v-btn>
+          </v-btn-toggle>
+
+          <v-btn-toggle dense rounded class="mr-5">
+            <v-btn small class="caption">custom-1</v-btn>
+            <v-btn small class="caption">custom-2</v-btn>
+            <v-btn small class="caption">custom-3</v-btn>
+          </v-btn-toggle>
+        </v-row>
+      </v-card>
+    </v-col>
+    -->
+
+    <v-col cols="7">
+      <v-card class="px-3">
+        <v-card-actions class="pa-0">
+          <v-text-field placeholder="Search" prepend-icon="mdi-magnify" clearable
+              :loading="!!keyword"
+              v-model="keyword"
+              @focus="searching = true"
+              @blur="searching = false">
+          </v-text-field>
+
+          <v-btn depressed class="secondary ml-3">Add</v-btn>
+        </v-card-actions>
+
+        <v-row class="pa-0 mt-n1 pb-3 ml-8" v-if="searching">
+          <v-btn-toggle dense rounded class="mr-5">
+            <v-btn small class="caption">admin</v-btn>
+            <v-btn small class="caption">editor</v-btn>
+            <v-btn small class="caption">user</v-btn>
+          </v-btn-toggle>
+
+          <v-btn-toggle dense rounded class="mr-5">
+            <v-btn small class="caption">custom-1</v-btn>
+            <v-btn small class="caption">custom-2</v-btn>
+            <v-btn small class="caption">custom-3</v-btn>
+          </v-btn-toggle>
+        </v-row>
+      </v-card>
+    </v-col>
+
+    <!--
+    <v-col cols="7" class="py-0" v-if="tab == 1">
+      <v-row align="center">
+        <v-col class="py-0">
+          <v-text-field label="Search" prepend-icon="mdi-magnify" clearable></v-text-field>
+        </v-col>
+
+        <v-col>
+          <v-btn depressed class="secondary ml-3">Add</v-btn>
+        </v-col>
+      </v-row>
+      <v-row class="pa-0 mt-n3 pb-3 ml-6">
+          <v-btn-toggle dense rounded class="mr-5">
+            <v-btn small class="caption">admin</v-btn>
+            <v-btn small class="caption">editor</v-btn>
+            <v-btn small class="caption">user</v-btn>
+          </v-btn-toggle>
+
+          <v-btn-toggle dense rounded class="mr-5">
+            <v-btn small class="caption">custom-1</v-btn>
+            <v-btn small class="caption">custom-2</v-btn>
+            <v-btn small class="caption">custom-3</v-btn>
+          </v-btn-toggle>
+        </v-row>
+    </v-col>
+    -->
+
+    <!-- <v-col cols="12" class="py-0">
+      <v-row align="start">
+        <v-col>
+          <v-card>
+            <v-text-field label="Search" prepend-inner-icon="mdi-magnify" clearable
+                solo flat hide-details
+                v-model="keyword"
+                @focus="searching = true"
+                @blur="searching = false">
+            </v-text-field>
+
+            <v-divider />
+            <v-row class="pa-0 mt-3 pb-3 ml-8" v-if="searching">
+              <v-btn-toggle dense rounded class="mr-5">
+                <v-btn small class="caption">admin</v-btn>
+                <v-btn small class="caption">editor</v-btn>
+                <v-btn small class="caption">user</v-btn>
+              </v-btn-toggle>
+
+              <v-btn-toggle dense rounded class="mr-5">
+                <v-btn small class="caption">custom-1</v-btn>
+                <v-btn small class="caption">custom-2</v-btn>
+                <v-btn small class="caption">custom-3</v-btn>
+              </v-btn-toggle>
+            </v-row>
+          </v-card>
+        </v-col>
+        <v-col cols="6">
+          <v-btn class="secondary ml-3">Add</v-btn>
+        </v-col>
+      </v-row>
+    </v-col> -->
+
+    <v-col cols="12">
       <v-card>
 
         <v-card-text class="pt-3">
@@ -87,13 +232,21 @@
         </v-card-text>
 
       </v-card>
+    </v-col>
+
+    
+
+  </v-row>
 </template>
 
 <script>
 export default {
   data: function() {
     return {
+      tab: 0,
       rows: 5,
+      searching: false,
+      keyword: '',
       raw: [
         [
           {"id":"f75600b8-2714-4c54-8d08-1ebe6fbef5a0","name":"admin","email":"admin@sk.com","roles":"admin"},
@@ -120,7 +273,10 @@ export default {
           {"name":"viewer","users":"2"}
         ]
       ],
-      pg: [5, 10, 20, 30]
+      pg: [5, 10, 20, 30],
+      color: {
+        secondary: '#1173ce'
+      }
     }
   },
   computed: {
@@ -140,5 +296,13 @@ export default {
 /* .v-data-table thead tr th { color: rgba(0, 0, 0, 0.3); font-weight: bold; } */
 .v-data-table thead tr th { color: #0f4c81; font-weight: bold; }
 
+.v-tabs { margin-left: -15px; margin-top: 5px; background-color: #e7ecef !important; }
+/* .v-tabs { margin: 0px; } */
+
 .pg-label { color: #9e9e9e !important; }
+
+/* .noti { margin-left: 5px; padding: 3px 4px 0 5px; vertical-align: middle; letter-spacing: 0em; } */
+.noti { margin-left: 7px; padding: 0px 4px; }
+
+/* .v-text-field.v-text-field--solo:not(.v-text-field--solo-flat) > .v-input__control > .v-input__slot { box-shadow: none;} */
 </style>

@@ -1,12 +1,12 @@
 <template>
-  <Table></Table>
+  <home />
 </template>
 
 <script>
-import Table from '~/components/Table.vue'
+import home from '~/pages/home.vue'
 
 export default {
-  components: { Table },
+  components: { home },
   layout: 'default2',
   data: function() {
     return {}

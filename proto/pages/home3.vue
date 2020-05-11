@@ -1,18 +1,15 @@
 <template>
-  <Table class="tb"></Table>
+  <home class="pt-8"/>
 </template>
 
 <script>
-import Table from '~/components/Table.vue'
+import home from '~/pages/home.vue'
 
 export default {
-  components: { Table },
+  components: { home },
   layout: 'default3',
   data: function() {
     return {}
   }
 }
 </script>
-<style scoped>
-.tb { padding-top: 32px; }
-</style>
