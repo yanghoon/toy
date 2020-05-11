@@ -20,7 +20,7 @@
 
       <v-divider></v-divider>
 
-      <v-list nav flat expand>
+      <v-list nav flat expand dense>
         <v-list-item-group mandatory v-model="selected">
           <template v-for="(val, name) in items">
             <v-subheader class="text-uppercase" :key="name">
