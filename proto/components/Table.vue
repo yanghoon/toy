@@ -1,7 +1,8 @@
 <template>
       <v-card>
 
-        <v-card-text class="pt-3">
+        <v-card-text class="pb-4 pa-0">
+          <SearchBarInline/>
           <v-simple-table>
             <template v-slot:default>
               <thead>
@@ -90,7 +91,10 @@
 </template>
 
 <script>
+import SearchBarInline from '~/components/SearchBarInline.vue'
+
 export default {
+  components: { SearchBarInline },
   data: function() {
     return {
       rows: 5,

@@ -1,12 +1,14 @@
 <template>
   <v-row column class="px-12 mt-n8">
-    <v-col cols="12" px-4>
+    <v-col cols="12">
       <TitleBar />
     </v-col>
 
+    <!--
     <v-col cols="7">
       <SearchBar />
     </v-col>
+    -->
 
     <v-col cols="12">
       <Table />
