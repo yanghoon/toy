@@ -155,7 +155,7 @@ export default {
 <style scoped>
 /* .v-navigation-drawer { background: linear-gradient( to bottom, #0f4c81, #1173ce 1%, #0f4c81 50%); } */
 /* .v-navigation-drawer { background: linear-gradient( to top left, #000, #0f4c81); } */
-.v-navigation-drawer { background: #0f4c81; }
+.v-navigation-drawer { background: #0f4c81 !important; }
 
 .v-navigation-drawer .v-subheader { color: rgba(239, 239, 239, 0.3) !important; }
 .v-navigation-drawer .v-list .v-list-item:not(.v-list-item--active) { color: rgba(239, 239, 239, 0.3) !important; }
