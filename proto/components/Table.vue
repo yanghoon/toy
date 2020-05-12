@@ -1,9 +1,9 @@
 <template>
       <v-card>
 
-        <v-card-text class="pb-4 pa-0">
-          <SearchBarInline/>
-          <v-simple-table>
+        <v-card-text class="pa-0">
+          <!-- <SearchBarInline/> -->
+          <v-simple-table class="body-1">
             <template v-slot:default>
               <thead>
                 <tr>
@@ -43,10 +43,10 @@
             </template>
           </v-simple-table>
 
-         <v-divider></v-divider>
+          <v-divider></v-divider>
 
-          <v-row no-gutters align="start" justify="space-between" class="pt-4 px-4">
-            <v-col cols="2" class="pt-2">
+          <v-row no-gutters align="center" justify="space-between" class="px-4 py-2">
+            <v-col cols="2">
               <span class="pg-label">1 - 5 of </span>
               <span class="body-2 secondary--text font-weight-bold">139</span>
               <span class="pg-label">items </span>
@@ -70,8 +70,8 @@
             </v-col>
 
             <v-col cols="2">
-              <v-row no-gutters justify="end">
-                <v-col class="pt-2">
+              <v-row no-gutters align="center" justify="end">
+                <v-col>
                   <span class="pg-label">Rows per page:</span>
                 </v-col>
                 <v-col>
@@ -129,7 +129,8 @@ export default {
   },
   computed: {
     items(){
-      return this.raw[this.tab] || this.raw[0]
+      var arr = this.raw[this.tab] || this.raw[0]
+      return [].concat(... new Array(this.rows/5).fill(arr))
     }
   }
 }

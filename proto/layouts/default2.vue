@@ -1,11 +1,10 @@
 <template>
   <v-app :class="nanum ? 'nanum' : ''">
     <v-navigation-drawer
+      app fixed class="elevation-1"
       v-model="drawer"
       :mini-variant="miniVariant"
-      :clipped="clipped"
-      fixed class="elevation-1"
-      app>
+      :clipped="clipped">
 
       <v-list-item class="logo" @click="nanum != nanum">
         <img class="logo-svg" src="~/assets/logo.svg" />

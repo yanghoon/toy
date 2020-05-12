@@ -1,11 +1,11 @@
 <template>
   <v-app>
     <v-navigation-drawer
+      app fixed class="elevation-9"
       v-model="drawer"
       :mini-variant="miniVariant"
       :clipped="clipped"
-      fixed class="elevation-9"
-      app>
+      >
 
       <v-list-item class="logo">
         <img class="logo-svg" src="~/assets/logo.svg" />

@@ -3,17 +3,43 @@
       <div>
       <!-- <v-card class="px-3"> -->
         <v-card-actions class="pa-0">
-          <v-text-field placeholder="Search" prepend-icon="mdi-magnify" clearable
+          <v-text-field placeholder="Search" clearable
+              solo flat dense rounded hide-details
               :loading="!!keyword"
               v-model="keyword"
               @focus="searching = true"
               @blur="searching = false">
+              <template v-slot:append>
+                <!-- <v-btn icon small color="#fff" class="info"> -->
+                <v-btn icon small color="#fff" class="info mr-n3">
+              <!-- <template v-slot:prepend-inner>
+                <v-btn icon small color="#fff" class="info ml-n4 mr-2"> -->
+                <!-- <v-btn icon small color="#fff" class="info ml-n1 mr-2"> -->
+                <!-- <v-btn depressed color="#fff" height="38" class="info ml-n3 mr-2"> -->
+                  <v-icon class="title">mdi-magnify</v-icon>
+                </v-btn>
+              </template>
+              <template v-slot:progress>
+                <v-progress-linear indeterminate absolute class="mx-auto" style="width: 93%; left: 0; right: 0;" height="2"/>
+              </template>
           </v-text-field>
-
-          <v-btn depressed small class="secondary ml-3">Add</v-btn>
+          <!--
+          <v-text-field placeholder="Search" clearable
+              solo hide-details
+              :loading="!!keyword"
+              v-model="keyword"
+              @focus="searching = true"
+              @blur="searching = false">
+              <template v-slot:prepend-inner>
+                <v-btn depressed color="#fff" x-small height="30px" class="info ml-n1 mr-2 px-0">
+                  <v-icon class="title">mdi-magnify</v-icon>
+                </v-btn>
+              </template>
+          </v-text-field>
+          -->
         </v-card-actions>
 
-        <v-row class="pa-0 mt-n1 pb-3 ml-8" v-if="searching">
+        <v-row class="pa-0 pb-3 mt-2 ml-6" v-if="searching">
           <v-btn-toggle dense rounded class="mr-5">
             <v-btn small class="caption">admin</v-btn>
             <v-btn small class="caption">editor</v-btn>

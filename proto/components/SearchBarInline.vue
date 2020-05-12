@@ -65,19 +65,31 @@
     </v-col>
     -->
 
-    <v-col cols="12" class="py-0 px-0">
+    <v-col cols="12" class="px-0 py-0">
       <v-row align="center" justify="space-between">
-        <v-col cols="7" class="ml-1">
-            <v-text-field label="Search" prepend-inner-icon="mdi-magnify" clearable
-                solo flat hide-details
+        <v-col cols="5" class="ml-3">
+            <!--
+            <v-text-field placeholder="Search" prepend-inner-icon="mdi-magnify" clearable
+                filled rounded
+                dense hide-details
+                background-color="#e7ecef"
+                class="primary--text body-1"
                 v-model="keyword"
-                :loading="!!keyword"
+                @focus="searching = true"
+                @blur="searching = false">
+            </v-text-field>
+            -->
+            <v-text-field placeholder="Search" prepend-inner-icon="mdi-magnify" clearable
+                hide-details
+                color="#41b6e6"
+                class="body-1 py-0"
+                v-model="keyword"
                 @focus="searching = true"
                 @blur="searching = false">
             </v-text-field>
         </v-col>
-        <v-col cols="12" v-if="searching">
-            <v-row class="pa-0 mt-n4 pb-3 ml-8">
+        <v-col cols="12" v-if="false && searching">
+            <v-row class="pa-0 mt-n3 ml-8">
               <v-btn-toggle dense rounded class="mr-5">
                 <v-btn small class="caption">admin</v-btn>
                 <v-btn small class="caption">editor</v-btn>

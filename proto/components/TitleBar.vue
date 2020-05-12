@@ -1,8 +1,9 @@
 <template>
-    <v-col cols="12" px-4>
-      <h2 class="primary--text text-capitalize">{{ $route.params.kind }}</h2>
+    <v-col cols="12">
+      <h1 class="primary--text display-1 font-weight-medium text-capitalize">{{ $route.params.kind }}</h1>
+      <!-- <h1 class="primary--text text-capitalize">{{ $route.params.kind }}</h1> -->
 
-      <v-tabs class="ml-n4 mt-1" color="#1173ce" background-color="#e7ecef" v-model="tab">
+      <v-tabs color="#1173ce" background-color="#e7ecef" v-model="tab">
         <v-tab class="body-2 font-weight-medium">Users</v-tab>
         <v-tab class="body-2 font-weight-medium">Groups</v-tab>
         <v-tab class="body-2 font-weight-medium">
