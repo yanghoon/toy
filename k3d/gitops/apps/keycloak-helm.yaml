@@ -19,13 +19,13 @@ spec:
           password: keycloak
 
           ingress:
-          enabled: true
-          hosts:
-          - keycloak.local  # add to /etc/hosts
+            enabled: true
+            hosts:
+            - keycloak.local  # add to /etc/hosts
 
           persistence:
-          deployPostgres: true
-          dbVendor: postgres  # also mysql, mariadb
+            deployPostgres: true
+            dbVendor: postgres  # also mysql, mariadb
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: keycloak
