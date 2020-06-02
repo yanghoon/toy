@@ -13,7 +13,7 @@ spec:
       values: |-
         keycloak:
           serviceAccount:
-          create: true
+            create: true
 
           username: keycloak
           password: keycloak
