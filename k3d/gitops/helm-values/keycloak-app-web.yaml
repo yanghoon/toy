@@ -1,0 +1,9 @@
+project: default
+source:
+  repoURL: 'https://github.com/yanghoon/toy.git'
+  path: k3d/gitops/helm-values
+  targetRevision: gitops
+destination:
+  server: 'https://kubernetes.default.svc'
+  namespace: keycloak
+syncPolicy: {}
