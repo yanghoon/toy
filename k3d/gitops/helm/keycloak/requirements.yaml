@@ -1,4 +1,7 @@
 dependencies:
 - name: keycloak
   version: 6.2.0
-  repository: https://kubernetes-charts.storage.googleapis.com
+  repository: https://codecentric.github.io/helm-charts
+  # repository: https://kubernetes-charts.storage.googleapis.com
+
+# Unable to create application: application spec is invalid: InvalidSpecError: Unable to generate manifests in k3d/gitops/helm/keycloak: rpc error: code = Unknown desc = `helm2 dependency build` failed exit status 1: Error: Can't get a valid version for repositories keycloak. Try changing the version constraint in requirements.yaml
