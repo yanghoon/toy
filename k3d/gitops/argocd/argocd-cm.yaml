@@ -1,0 +1,20 @@
+# argocd repo add https://kubernetes-charts.storage.googleapis.com --name stable --type helm
+# argocd repo add https://codecentric.github.io/helm-charts --name codecentric --type helm
+# argocd repo list
+# argocd repo rm https://codecentric.github.io/helm-charts
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app.kubernetes.io/name: argocd-cm
+    app.kubernetes.io/part-of: argocd
+  name: argocd-cm
+  namespace: argo
+data:
+  repositories: |
+    - name: stable
+      type: helm
+      url: https://kubernetes-charts.storage.googleapis.com
+    - name: codecentric
+      type: helm
+      url: https://codecentric.github.io/helm-charts
