@@ -1,0 +1,14 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: console
+  namespace: argo
+spec:
+  destination:
+    namespace: argo
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    repoURL: https://github.com/yanghoon/toy.git
+    path: k3d/gitops/apps/console
+    targetRevision: gitops
