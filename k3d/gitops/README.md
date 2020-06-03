@@ -15,6 +15,9 @@ bash argo.sh
 # Password updated
 # Context 'admin' updated
 ```
+```bash
+kubectl apply -f config -n argo
+```
 
 ## Deploy Applications
 ```
