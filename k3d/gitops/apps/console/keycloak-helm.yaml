@@ -26,6 +26,10 @@ spec:
           persistence:
             deployPostgres: true
             dbVendor: postgres  # also mysql, mariadb
+
+        postgresql:
+          persistence:
+            enabled: true
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: keycloak
