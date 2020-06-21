@@ -39,7 +39,7 @@ spec:
           value: kube-system
         - name: TILLER_HISTORY_MAX
           value: "0"
-        image: gcr.io/kubernetes-helm/tiller:v2.9.1
+        image: gcr.io/kubernetes-helm/tiller:v2.16.9
         imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:

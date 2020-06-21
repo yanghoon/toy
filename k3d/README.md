@@ -10,6 +10,17 @@ $ cd monitoring && bash grafana.sh
 
 $ cd auth && bash keycloak.sh
 ```
+### ArgoCD
+```bash
+## Setup
+$ cd gitops/argocd && bash argo.sh
+
+## Config DNS
+## - https://github.com/coredns/coredns/issues/1260
+## - kube-system/coredns
+# Corefile: |
+#   rewrite name regex (.*)\.local traefik.kube-system.svc.cluster.local
+```
 
 ## Issues
 ### Helm
